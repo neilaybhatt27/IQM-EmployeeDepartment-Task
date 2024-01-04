@@ -53,5 +53,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeDao.update(id, employee);
     }
 
-
+    /**
+     * This is a helper function which calls the delete method of the employeeDao
+     * @param id id of the employee whose details need to be deleted from the database.
+     */
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeDao.delete(id);
+    }
 }

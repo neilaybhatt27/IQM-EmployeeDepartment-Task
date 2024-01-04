@@ -112,9 +112,14 @@ public class EmployeeDao {
     /**
      * This function deletes the specified employee from the database
      * @param id - id of the employee that needs to be deleted
-     * @return - id of the deleted employee
      */
-    public long delete(long id) {
-        return 0;
+    public void delete(long id) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM employee WHERE id = ?");
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

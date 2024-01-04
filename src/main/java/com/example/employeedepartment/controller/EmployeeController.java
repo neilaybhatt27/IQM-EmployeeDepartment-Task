@@ -3,6 +3,7 @@ package com.example.employeedepartment.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,16 +69,13 @@ public class EmployeeController {
     }
 
     /**
-     * This API request deleted the specified employee from the database.
+     * This API request to delete the specified employee from the database.
      * @param id - refers to the id in the Employee table in the database. Parameter in the API endpoint.
-     * @return ResponseEntity<Void> </>Void Response Entity
+     * @return A success message string
      */
-//    @DeleteMapping(path = "/{id}")
-//    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-//        if (!employeeDao.existsById(id)) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        employeeDao.deleteById(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping(path = "/{id}")
+    public @ResponseBody String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
+        return "Employee deleted successfully";
+    }
 }
