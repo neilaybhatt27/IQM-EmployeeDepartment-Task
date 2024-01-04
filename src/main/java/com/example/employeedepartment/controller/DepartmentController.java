@@ -1,4 +1,4 @@
-package com.example.employeedepartment;
+package com.example.employeedepartment.controller;
 
 import java.util.Optional;
 
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.employeedepartment.model.Department;
+import com.example.employeedepartment.dao.DepartmentRepository;
 
 
 @RestController
