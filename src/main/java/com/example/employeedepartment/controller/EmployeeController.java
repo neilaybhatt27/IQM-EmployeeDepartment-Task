@@ -25,18 +25,22 @@ public class EmployeeController {
     @Autowired
     private DepartmentDao departmentDao;
 
-//    @GetMapping(path = "/all")
-//    public @ResponseBody List<Employee> getAllEmployees() {
-//        return employeeDao.getAll();
-//    }
+    /**
+     * This GET API request gets all the employees and their details and sends the response to the client.
+     * @return ArrayList containing all the employees and their details.
+     */
+    @GetMapping(path = "/all")
+    public @ResponseBody List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
 
-//    @GetMapping(path="/{id}")
-//    public @ResponseBody Employee getEmployeeByID(@PathVariable Long id) {
-//        return employeeDao.getById(id);
-//    }
+    @GetMapping(path="/{id}")
+    public @ResponseBody Employee getEmployeeById(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
+    }
 
     /**
-     * This API request adds a new Employee to the database.
+     * This POST API request adds a new Employee to the system.
      * @param newEmployee This request body contains details of the new Employee. It must have name, role and departmentId.
      * @return A success message string.
      */

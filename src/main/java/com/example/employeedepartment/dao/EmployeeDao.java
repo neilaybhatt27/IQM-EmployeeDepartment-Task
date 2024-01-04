@@ -2,7 +2,10 @@ package com.example.employeedepartment.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -24,13 +27,16 @@ public class EmployeeDao {
      *
      * @param employee - Employee object received from client side
      */
-    public void save(Employee employee) throws SQLException {
-        Connection conn = dataSource.getConnection();
-        PreparedStatement pstmt = conn.prepareStatement("INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)");
-        pstmt.setString(1, employee.getName());
-        pstmt.setString(2, employee.getRole());
-        pstmt.setLong(3, employee.getDepartmentId());
-        pstmt.executeUpdate();
+    public void save(Employee employee) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)");
+            pstmt.setString(1, employee.getName());
+            pstmt.setString(2, employee.getRole());
+            pstmt.setLong(3, employee.getDepartmentId());
+            pstmt.executeUpdate();
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
     }
 
     /**
@@ -38,8 +44,25 @@ public class EmployeeDao {
      * @return List of all employees found in the database
      */
     public List<Employee> getAll() {
-//        return jdbcTemplate.query("SELECT * FROM Employee", new BeanPropertyRowMapper<Employee>(Employee.class));
-        return null;
+        List<Employee> employees = new ArrayList<>();
+
+        try(Connection conn = dataSource.getConnection()) {
+            Statement stmnt = conn.createStatement();
+            ResultSet resultSet = stmnt.executeQuery("SELECT * FROM employee");
+
+            while (resultSet.next()){
+                Employee employee = new Employee();
+                employee.setId(resultSet.getLong("id"));
+                employee.setName(resultSet.getString("name"));
+                employee.setRole(resultSet.getString("role"));
+                employee.setDepartmentId(resultSet.getLong("department_id"));
+                employees.add(employee);
+            }
+        } catch (SQLException ex){
+            throw new RuntimeException();
+        }
+
+        return employees;
     }
 
     /**
@@ -47,9 +70,25 @@ public class EmployeeDao {
      * @param id - id of the requested employee
      * @return Employee object of the specified id.
      */
-    public Employee getById(long id) {
-//        return jdbcTemplate.queryForObject("SELECT * FROM Employee WHERE id = ?", new BeanPropertyRowMapper<Employee>(Employee.class), id);
-        return null;
+    public Employee getById(Long id) {
+        Employee employee = new Employee();
+
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee WHERE id = ?");
+            pstmt.setLong(1, id);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if(resultSet.next()){
+                employee.setId(resultSet.getLong("id"));
+                employee.setName(resultSet.getString("name"));
+                employee.setRole(resultSet.getString("role"));
+                employee.setRole(resultSet.getString("role"));
+                employee.setDepartmentId(resultSet.getLong("department_id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return employee;
     }
 
     /**

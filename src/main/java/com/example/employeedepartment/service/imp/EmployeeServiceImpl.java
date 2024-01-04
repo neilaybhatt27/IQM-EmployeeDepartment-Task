@@ -1,6 +1,7 @@
 package com.example.employeedepartment.service.imp;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
 
     /**
-     * @param employee
+     * This function is a helper function, and it calls the save function of the EmployeeDao.
+     * @param employee Employee object
      */
     @Override
     public void addEmployee(Employee employee) {
-        try {
-            employeeDao.save(employee);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
+        employeeDao.save(employee);
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeDao.getAll();
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getEmployeeById(Long id) {
+        return employeeDao.getById(id);
+    }
+
+
 }
