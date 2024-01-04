@@ -93,12 +93,20 @@ public class EmployeeDao {
 
     /**
      * This function updates the employee details of the specified employee in the database
-     * @param id - id of the employee that needs to be updated
-     * @param employee - Employee object with the updated details
-     * @return updated Employee object
+     * @param id id of the employee that needs to be updated
+     * @param employee Employee object with the updated details
      */
-    public Employee update(long id, Employee employee) {
-        return null;
+    public void update(long id, Employee employee) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE employee SET name = ?, role = ?, department_id = ? WHERE id = ?");
+            pstmt.setString(1, employee.getName());
+            pstmt.setString(2, employee.getRole());
+            pstmt.setLong(3, employee.getDepartmentId());
+            pstmt.setLong(4, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

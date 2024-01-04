@@ -1,9 +1,9 @@
 package com.example.employeedepartment.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +34,11 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
+    /**
+     * This GET API request gets the details of the employee whose id has been passed as the parameter.
+     * @param id id of the requested employee.
+     * @return Employee object containing the necessary details.
+     */
     @GetMapping(path="/{id}")
     public @ResponseBody Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
@@ -51,34 +56,16 @@ public class EmployeeController {
     }
 
     /**
-     * This API request updates the employee details according to the input from the client.
-     * @param id - the id which is passed as a parameter in the API endpoint. Refers to the id in the Employee table in the database.
-     * @param updatedEmployee = Contains the updates required from the request body. Needs to have name, role and departmentId in the request.
-     * @return ResponseEntity<Employee> - JSON object of the updated employee details along with status code.
+     * This PUT API request updates the employee details according to the input from the client.
+     * @param id the id which is passed as a parameter in the API endpoint. Refers to the id in the Employee table in the database.
+     * @param updatedEmployee Contains the updates required from the request body. Needs to have name, role and departmentId in the request.
+     * @return A success message String
      */
-//    @PutMapping(path = "/{id}")
-//    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-//        // Validate employee exists
-//        if (!employeeDao.existsById(id)) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        // Validate department_id exists
-//        Optional<Department> optionalDepartment = departmentDao.findById(updatedEmployee.getDepartmentId());
-//        if (!optionalDepartment.isPresent()) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//
-//        // Update Employee entity from request
-//        Employee existingEmployee = employeeDao.findById(id).get();
-//        existingEmployee.setId(id);
-//        existingEmployee.setName(updatedEmployee.getName());
-//        existingEmployee.setRole(updatedEmployee.getROle());
-//        existingEmployee.setDepartment(updatedEmployee.getDepartmentId());
-//
-//        // Save and return the updated employee
-//        Employee newEmployee = employeeDao.save(existingEmployee);
-//        return ResponseEntity.ok(newEmployee);
-//    }
+    @PutMapping(path = "/{id}")
+    public @ResponseBody String updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        employeeService.updateEmployee(id, updatedEmployee);
+        return "Employee updated successfully";
+    }
 
     /**
      * This API request deleted the specified employee from the database.
