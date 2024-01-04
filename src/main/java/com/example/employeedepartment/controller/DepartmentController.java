@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.employeedepartment.model.Department;
-import com.example.employeedepartment.dao.DepartmentRepository;
+import com.example.employeedepartment.dao.DepartmentDao;
 
 
 @RestController
 @RequestMapping(path = "/departments")
 public class DepartmentController {
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private DepartmentDao departmentRepository;
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Department> getAllDepartments() {
