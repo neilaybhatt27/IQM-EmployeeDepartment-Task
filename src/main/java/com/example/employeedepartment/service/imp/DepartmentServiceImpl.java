@@ -24,12 +24,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * @param id
-     * @return
+     * This is a service function which calls the getById() method of the DepartmentDao.
+     * @param id id of the department which needs to be fetched.
+     * @return Department object of the requested department.
      */
     @Override
     public Department getDepartmentById(Long id) {
-        return null;
+        return departmentDao.getById(id);
     }
 
     /**

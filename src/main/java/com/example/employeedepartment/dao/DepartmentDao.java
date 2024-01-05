@@ -1,6 +1,7 @@
 package com.example.employeedepartment.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,5 +43,28 @@ public class DepartmentDao {
             throw new RuntimeException(e);
         }
         return departments;
+    }
+
+    /**
+     * This method interacts with the database and fetches the department whose id matches the id in the input.
+     * @param id id of the department which needs to be fetched.
+     * @return Department object containing the requested department details.
+     */
+    public Department getById(Long id) {
+        Department department = new Department();
+
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM department WHERE id = ?");
+            pstmt.setLong(1, id);
+
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()){
+                department.setId(resultSet.getLong("id"));
+                department.setName(resultSet.getString("name"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return department;
     }
 }

@@ -32,6 +32,11 @@ public class DepartmentController {
         return departmentService.getAllDepartments();
     }
 
+    /**
+     * This GET API request gets the department information specified by the id and sends it to the client.
+     * @param id id of the department whose information needs to be fetched.
+     * @return Department object of the requested department.
+     */
     @GetMapping(path = "/{id}")
     public @ResponseBody Department getDepartmentById(@PathVariable Long id) {
         return departmentService.getDepartmentById(id);
