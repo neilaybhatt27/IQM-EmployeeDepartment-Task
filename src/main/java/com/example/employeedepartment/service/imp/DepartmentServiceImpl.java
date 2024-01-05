@@ -2,16 +2,25 @@ package com.example.employeedepartment.service.imp;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.employeedepartment.dao.DepartmentDao;
 import com.example.employeedepartment.model.Department;
 import com.example.employeedepartment.service.interfaces.DepartmentService;
 
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
+    @Autowired
+    private DepartmentDao departmentDao;
+
     /**
-     * @return
+     * This is a service function which calls the update getAll() method of the DepartmentDao.
+     * @return List of all departments and its details present in the database.
      */
     @Override
     public List<Department> getAllDepartments() {
-        return null;
+        return departmentDao.getAll();
     }
 
     /**

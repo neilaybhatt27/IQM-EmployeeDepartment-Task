@@ -23,6 +23,10 @@ public class DepartmentController {
     @Autowired
     private DepartmentServiceImpl departmentService;
 
+    /**
+     * This GET API request fetches all the entries of departments and sends it to the client.
+     * @return List of all the departments and its details.
+     */
     @GetMapping(path = "/all")
     public @ResponseBody List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
