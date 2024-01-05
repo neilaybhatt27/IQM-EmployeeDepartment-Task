@@ -1,8 +1,19 @@
 package com.example.employeedepartment.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
+
 import com.example.employeedepartment.model.Department;
 
-public interface DepartmentDao extends CrudRepository<Department, Long>{
-    
+@Repository
+public class DepartmentDao {
+    private final DataSource dataSource;
+
+
+    public DepartmentDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+
 }
