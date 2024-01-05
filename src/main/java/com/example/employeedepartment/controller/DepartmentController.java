@@ -53,6 +53,12 @@ public class DepartmentController {
         return "Department created successfully";
     }
 
+    /**
+     * This PUT API request updates the department details and sends back a success message to the client.
+     * @param id id of the department that needs to be updated.
+     * @param updatedDepartment Department object with the updated details.
+     * @return String containing success message.
+     */
     @PutMapping("/{id}")
     public @ResponseBody String updateDepartment(@PathVariable Long id, @RequestBody Department updatedDepartment) {
         departmentService.updateDepartment(id, updatedDepartment);

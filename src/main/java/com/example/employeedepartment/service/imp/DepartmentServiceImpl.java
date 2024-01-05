@@ -43,12 +43,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * @param id
-     * @param department
+     * This service function calls the update() method of the DepartmentDao and works to update the details in the system.
+     * @param id id of the department which needs to be updated.
+     * @param department Department object containing the new details.
      */
     @Override
     public void updateDepartment(Long id, Department department) {
-
+        departmentDao.update(id, department);
     }
 
     /**

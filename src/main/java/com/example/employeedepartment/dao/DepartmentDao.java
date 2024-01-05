@@ -81,4 +81,20 @@ public class DepartmentDao {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method updates the department details in the database.
+     * @param id id of the department that needs to be updated.
+     * @param department Department object containing new details.
+     */
+    public void update(Long id, Department department) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE department SET name = ? WHERE id = ?");
+            pstmt.setString(1, department.getName());
+            pstmt.setLong(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
