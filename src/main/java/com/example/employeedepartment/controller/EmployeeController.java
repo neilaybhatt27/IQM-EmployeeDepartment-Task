@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.employeedepartment.model.Employee;
-import com.example.employeedepartment.dao.DepartmentDao;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 

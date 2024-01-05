@@ -65,6 +65,11 @@ public class DepartmentController {
         return "Department updated successfully";
     }
 
+    /**
+     * This DELETE API request deletes the department from the system and sends back a success message to the client.
+     * @param id id of the department that needs to be deleted.
+     * @return String containing the success message.
+     */
     @DeleteMapping("/{id}")
     public @ResponseBody String deleteDepartment(@PathVariable Long id) {
         departmentService.deleteDepartment(id);

@@ -53,10 +53,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * @param id
+     * This service function deletes the department from the system by calling the delete() method of the DepartmentDao.
+     * @param id id of the department that needs to be deleted.
      */
     @Override
     public void deleteDepartment(Long id) {
-
+        departmentDao.delete(id);
     }
 }

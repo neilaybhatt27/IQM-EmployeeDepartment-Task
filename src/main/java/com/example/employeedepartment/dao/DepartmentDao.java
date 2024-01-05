@@ -97,4 +97,18 @@ public class DepartmentDao {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method deletes the department from the database.
+     * @param id id of the department that needs to be deleted.
+     */
+    public void delete(Long id) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM department WHERE id = ?");
+            pstmt.setLong(1, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
