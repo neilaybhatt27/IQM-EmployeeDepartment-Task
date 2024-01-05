@@ -67,4 +67,18 @@ public class DepartmentDao {
         }
         return department;
     }
+
+    /**
+     * This method adds a new department to the database.
+     * @param department Department object containing the info to be added in the database.
+     */
+    public void save(Department department) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO department (name) VALUES (?)");
+            pstmt.setString(1, department.getName());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

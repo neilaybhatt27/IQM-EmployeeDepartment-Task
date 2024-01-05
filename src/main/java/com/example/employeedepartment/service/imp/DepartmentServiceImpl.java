@@ -34,11 +34,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * @param department
+     * This service function calls the save() method of the DepartmentDao and works to add details in the system.
+     * @param department Department object containing details of the new department.
      */
     @Override
     public void addDepartment(Department department) {
-
+        departmentDao.save(department);
     }
 
     /**

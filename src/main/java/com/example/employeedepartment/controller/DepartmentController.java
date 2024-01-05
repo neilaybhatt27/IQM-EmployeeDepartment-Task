@@ -42,6 +42,11 @@ public class DepartmentController {
         return departmentService.getDepartmentById(id);
     }
 
+    /**
+     * This POST API request adds a new department in the system and sends a success message back to the client.
+     * @param newDepartment Department object containing the details of new department. Must contain the name.
+     * @return String containing the success message.
+     */
     @PostMapping(path = "/add")
     public @ResponseBody String createDepartment(@RequestBody Department newDepartment) {
         departmentService.addDepartment(newDepartment);
