@@ -21,7 +21,11 @@ import com.example.employeedepartment.service.imp.DepartmentServiceImpl;
 @RequestMapping(path = "/departments")
 public class DepartmentController {
     @Autowired
-    private DepartmentServiceImpl departmentService;
+    private final DepartmentServiceImpl departmentService;
+
+    public DepartmentController(DepartmentServiceImpl departmentService) {
+        this.departmentService = departmentService;
+    }
 
     /**
      * This GET API request fetches all the entries of departments and sends it to the client.

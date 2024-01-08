@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +39,17 @@ public class EmployeeDao {
     }
 
     /**
-     * This function returns all the employees
+     * This function returns all the employees with pagination to reduce load.
      * @return List of all employees found in the database
      */
-    public List<Employee> getAll() {
+    public List<Employee> getAll(int page, int size) {
         List<Employee> employees = new ArrayList<>();
 
         try(Connection conn = dataSource.getConnection()) {
-            Statement stmnt = conn.createStatement();
-            ResultSet resultSet = stmnt.executeQuery("SELECT * FROM employee");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee LIMIT ? OFFSET ?");
+            pstmt.setInt(1, size);
+            pstmt.setInt(2, page * size);
+            ResultSet resultSet = pstmt.executeQuery();
 
             while (resultSet.next()){
                 Employee employee = new Employee();

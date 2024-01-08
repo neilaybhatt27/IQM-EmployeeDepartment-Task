@@ -28,8 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return ArrayList containing all the employees and their details
      */
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeDao.getAll();
+    public List<Employee> getAllEmployees(int page, int size) {
+        return employeeDao.getAll(page, size);
     }
 
     /**

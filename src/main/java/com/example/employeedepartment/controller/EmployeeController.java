@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +22,20 @@ import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 @RequestMapping(path = "/employees")
 public class EmployeeController {
     @Autowired
-    private EmployeeServiceImpl employeeService;
+    private final EmployeeServiceImpl employeeService;
+
+    public EmployeeController(EmployeeServiceImpl employeeService) {
+        this.employeeService = employeeService;
+    }
 
     /**
      * This GET API request gets all the employees and their details and sends the response to the client.
+     * It has pagination which allows the API to fetch only 5 entries per page to reduce load.
      * @return ArrayList containing all the employees and their details.
      */
     @GetMapping(path = "/all")
-    public @ResponseBody List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public @ResponseBody List<Employee> getAllEmployees(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return employeeService.getAllEmployees(page, size);
     }
 
     /**
