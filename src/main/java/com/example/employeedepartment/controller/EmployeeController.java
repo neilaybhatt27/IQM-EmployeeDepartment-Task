@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.employeedepartment.model.Employee;
-import com.example.employeedepartment.dao.DepartmentDao;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 
@@ -23,8 +22,6 @@ import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 public class EmployeeController {
     @Autowired
     private EmployeeServiceImpl employeeService;
-    @Autowired
-    private DepartmentDao departmentDao;
 
     /**
      * This GET API request gets all the employees and their details and sends the response to the client.

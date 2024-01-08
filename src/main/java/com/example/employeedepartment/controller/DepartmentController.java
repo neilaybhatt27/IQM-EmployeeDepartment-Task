@@ -1,9 +1,8 @@
 package com.example.employeedepartment.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,52 +14,65 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.employeedepartment.model.Department;
-import com.example.employeedepartment.dao.DepartmentDao;
+import com.example.employeedepartment.service.imp.DepartmentServiceImpl;
 
 
 @RestController
 @RequestMapping(path = "/departments")
 public class DepartmentController {
     @Autowired
-    private DepartmentDao departmentRepository;
+    private DepartmentServiceImpl departmentService;
 
+    /**
+     * This GET API request fetches all the entries of departments and sends it to the client.
+     * @return List of all the departments and its details.
+     */
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+    public @ResponseBody List<Department> getAllDepartments() {
+        return departmentService.getAllDepartments();
     }
 
+    /**
+     * This GET API request gets the department information specified by the id and sends it to the client.
+     * @param id id of the department whose information needs to be fetched.
+     * @return Department object of the requested department.
+     */
     @GetMapping(path = "/{id}")
-    public @ResponseBody Optional<Department> getDepartmentById(@PathVariable Long id) {
-        return departmentRepository.findById(id);
+    public @ResponseBody Department getDepartmentById(@PathVariable Long id) {
+        return departmentService.getDepartmentById(id);
     }
 
+    /**
+     * This POST API request adds a new department in the system and sends a success message back to the client.
+     * @param newDepartment Department object containing the details of new department. Must contain the name.
+     * @return String containing the success message.
+     */
     @PostMapping(path = "/add")
-    public @ResponseBody Department createDepartment(@RequestBody String name) {
-        Department newDepartment = new Department();
-        newDepartment.setName(name);
-        departmentRepository.save(newDepartment);
-        return newDepartment;
+    public @ResponseBody String createDepartment(@RequestBody Department newDepartment) {
+        departmentService.addDepartment(newDepartment);
+        return "Department created successfully";
     }
 
+    /**
+     * This PUT API request updates the department details and sends back a success message to the client.
+     * @param id id of the department that needs to be updated.
+     * @param updatedDepartment Department object with the updated details.
+     * @return String containing success message.
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody String name) {
-        if (!departmentRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Department existingDepartment = departmentRepository.findById(id).get();
-        existingDepartment.setId(id);
-        existingDepartment.setName(name);
-        Department updatedDepartment = departmentRepository.save(existingDepartment);
-        return ResponseEntity.ok(updatedDepartment);
+    public @ResponseBody String updateDepartment(@PathVariable Long id, @RequestBody Department updatedDepartment) {
+        departmentService.updateDepartment(id, updatedDepartment);
+        return "Department updated successfully";
     }
 
+    /**
+     * This DELETE API request deletes the department from the system and sends back a success message to the client.
+     * @param id id of the department that needs to be deleted.
+     * @return String containing the success message.
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
-        if (!departmentRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        departmentRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public @ResponseBody String deleteDepartment(@PathVariable Long id) {
+        departmentService.deleteDepartment(id);
+        return "Department deleted successfully";
     }
 }
