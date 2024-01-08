@@ -8,7 +8,7 @@ import com.example.employeedepartment.model.Employee;
 public interface EmployeeService {
     void addEmployee(Employee employee);
 
-    List<Employee> getAllEmployees(int page, int size);
+    List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection);
 
     Employee getEmployeeById(Long id);
 

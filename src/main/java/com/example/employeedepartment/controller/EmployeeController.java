@@ -34,8 +34,8 @@ public class EmployeeController {
      * @return ArrayList containing all the employees and their details.
      */
     @GetMapping(path = "/all")
-    public @ResponseBody List<Employee> getAllEmployees(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return employeeService.getAllEmployees(page, size);
+    public @ResponseBody List<Employee> getAllEmployees(@RequestParam("page") int page, @RequestParam("size") int size, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection) {
+        return employeeService.getAllEmployees(page, size, sortField, sortDirection);
     }
 
     /**

@@ -42,11 +42,11 @@ public class EmployeeDao {
      * This function returns all the employees with pagination to reduce load.
      * @return List of all employees found in the database
      */
-    public List<Employee> getAll(int page, int size) {
+    public List<Employee> getAll(int page, int size, String sortField, String sortDirection) {
         List<Employee> employees = new ArrayList<>();
 
         try(Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee LIMIT ? OFFSET ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee ORDER BY " + sortField + " " + sortDirection + " " + "LIMIT ? OFFSET ?");
             pstmt.setInt(1, size);
             pstmt.setInt(2, page * size);
             ResultSet resultSet = pstmt.executeQuery();
