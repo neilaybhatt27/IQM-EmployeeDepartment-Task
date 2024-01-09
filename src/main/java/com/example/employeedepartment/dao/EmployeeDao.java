@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -16,6 +18,7 @@ import com.example.employeedepartment.model.Employee;
 @Repository
 public class EmployeeDao {
     private final DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
 
     public EmployeeDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -72,6 +75,7 @@ public class EmployeeDao {
             pstmt.setInt(++paramIndex, size);
             pstmt.setInt(++paramIndex, page * size);
 
+            logger.info("Executing SQL query: {}", query);
             ResultSet resultSet = pstmt.executeQuery();
 
             while (resultSet.next()) {
@@ -83,6 +87,7 @@ public class EmployeeDao {
                 employees.add(employee);
             }
         } catch (SQLException ex) {
+            logger.error("Error executing SQL query", ex);
             throw new RuntimeException();
         }
 

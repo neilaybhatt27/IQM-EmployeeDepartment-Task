@@ -2,6 +2,8 @@ package com.example.employeedepartment.service.imp;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import com.example.employeedepartment.service.interfaces.EmployeeService;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
+
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
     /**
      * This function is a helper function, and it calls the save function of the EmployeeDao.
@@ -36,7 +40,10 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
-        return employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+        logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
+        List<Employee> employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+        logger.info("Finished processing getAllEmployees request with {} employees", employees.size());
+        return employees;
     }
 
     /**

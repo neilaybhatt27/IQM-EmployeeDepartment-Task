@@ -2,6 +2,8 @@ package com.example.employeedepartment.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
@@ -24,13 +27,15 @@ public class EmployeeController {
     @Autowired
     private final EmployeeServiceImpl employeeService;
 
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
     public EmployeeController(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
     /**
      * This GET API request gets all the employees and their details and sends the response to the client.
-     * It has pagination which allows the API to fetch only 5 entries per page to reduce load.
+     * It has pagination which allows the API to fetch only certain entries per page to reduce load.
      * It also has sorting by name and sorting by id feature. (Optional)
      * It also has search term available so that you can get details according to the search term. (Optional)
      *
@@ -46,7 +51,10 @@ public class EmployeeController {
         if (page < 0 || size <= 0 || !sortField.equals("id") && !sortField.equals("name") || !sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")) {
             throw new IllegalArgumentException("Invalid parameters");
         }
-        return employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+        logger.info("Received GET /employees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
+        List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+        logger.info("Sent GET /employees response with {} employees", employees.size());
+        return employees;
     }
 
     /**
