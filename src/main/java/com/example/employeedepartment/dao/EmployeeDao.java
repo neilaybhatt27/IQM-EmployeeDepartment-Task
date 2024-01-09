@@ -88,7 +88,7 @@ public class EmployeeDao {
             }
         } catch (SQLException ex) {
             logger.error("Error executing SQL query", ex);
-            throw new RuntimeException();
+            throw new RuntimeException("Database error: "+ ex.getMessage());
         }
 
         return employees;

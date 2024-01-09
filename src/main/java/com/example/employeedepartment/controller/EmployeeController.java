@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +49,15 @@ public class EmployeeController {
      * @return ArrayList containing all the employees and their details.
      */
     @GetMapping(path = "/all")
-    public @ResponseBody List<Employee> getAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "size", required = false, defaultValue = "5") int size, @RequestParam(value = "sortField", required = false, defaultValue = "id") String sortField, @RequestParam(value = "sortDirection", required = false, defaultValue = "asc") String sortDirection, @RequestParam(value = "searchTerm", required = false) String searchTerm) {
+    public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "size", required = false, defaultValue = "5") int size, @RequestParam(value = "sortField", required = false, defaultValue = "id") String sortField, @RequestParam(value = "sortDirection", required = false, defaultValue = "asc") String sortDirection, @RequestParam(value = "searchTerm", required = false) String searchTerm) {
         if (page < 0 || size <= 0 || !sortField.equals("id") && !sortField.equals("name") || !sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")) {
+            logger.error("Error in passing parameters.");
             throw new IllegalArgumentException("Invalid parameters");
         }
         logger.info("Received GET /employees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
         logger.info("Sent GET /employees response with {} employees", employees.size());
-        return employees;
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
     /**
