@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.employeedepartment.IdNotFoundException;
+import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.interfaces.EmployeeService;

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 
-import com.example.employeedepartment.IdNotFoundException;
+import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.model.Employee;
 
 @Repository
