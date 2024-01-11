@@ -1,5 +1,6 @@
 package com.example.employeedepartment.service.imp;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.interfaces.EmployeeService;
@@ -40,8 +42,18 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
+        if (page < 0 || size <= 0 || !sortField.equals("id") && !sortField.equals("name") || !sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")) {
+            logger.error("Error in passing parameters.");
+            throw new IllegalArgumentException("Invalid parameters");
+        }
         logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
-        List<Employee> employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+        List<Employee> employees = null;
+        try {
+            employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+        } catch (SQLException e) {
+            logger.error("Error occurred in database operation.");
+            throw new RuntimeException("Some error occurred in the server.",e);
+        }
         logger.info("Finished processing getAllEmployees request with {} employees", employees.size());
         return employees;
     }
@@ -54,7 +66,14 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public Employee getEmployeeById(Long id) {
-        return employeeDao.getById(id);
+        try {
+            logger.info("Processing getEmployeeById request with id={}", id);
+            Employee employee = employeeDao.getById(id);
+            logger.info("Finished processing getEmployeeById request with employee id = {}", id);
+            return employee;
+        } catch (SQLException | IdNotFoundException e) {
+            throw new RuntimeException("Some error occurred in the server.", e);
+        }
     }
 
     /**

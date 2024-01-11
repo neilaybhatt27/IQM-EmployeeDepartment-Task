@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.employeedepartment.dao.EmployeeDao;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
@@ -49,15 +51,25 @@ public class EmployeeController {
      * @return ArrayList containing all the employees and their details.
      */
     @GetMapping(path = "/all")
-    public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "size", required = false, defaultValue = "5") int size, @RequestParam(value = "sortField", required = false, defaultValue = "id") String sortField, @RequestParam(value = "sortDirection", required = false, defaultValue = "asc") String sortDirection, @RequestParam(value = "searchTerm", required = false) String searchTerm) {
-        if (page < 0 || size <= 0 || !sortField.equals("id") && !sortField.equals("name") || !sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")) {
-            logger.error("Error in passing parameters.");
-            throw new IllegalArgumentException("Invalid parameters");
-        }
+    public ResponseEntity<Object> getAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                                  @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                                  @RequestParam(value = "sortField", required = false, defaultValue = "id") String sortField,
+                                                  @RequestParam(value = "sortDirection", required = false, defaultValue = "asc") String sortDirection,
+                                                  @RequestParam(value = "searchTerm", required = false) String searchTerm,
+                                                  HttpServletRequest request,
+                                                  HttpServletResponse response) {
         logger.info("Received GET /employees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
-        List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
-        logger.info("Sent GET /employees response with {} employees", employees.size());
-        return new ResponseEntity<>(employees, HttpStatus.OK);
+        try {
+            List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Sent GET /employees response with {} employees", employees.size());
+            return new ResponseEntity<>(employees, HttpStatus.OK);
+        } catch (IllegalArgumentException ex){
+            logger.error("Error in passing parameters.");
+            return new ResponseEntity<>("Invalid Parameter/s. Please check again.", HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException ex){
+            logger.error("Some error occurred in the server");
+            return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -67,8 +79,16 @@ public class EmployeeController {
      * @return Employee object containing the necessary details.
      */
     @GetMapping(path = "/{id}")
-    public @ResponseBody Employee getEmployeeById(@PathVariable Long id) {
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
+        logger.info("Received GET /employees request with employee id = {}", id);
+        try {
+            Employee requestedEmployee = employeeService.getEmployeeById(id);
+            logger.info("Sent GET /employees response with employee id = {}", id);
+            return new ResponseEntity<>(requestedEmployee, HttpStatus.OK);
+        } catch (RuntimeException ex){
+            logger.error("Some error occurred in the server");
+            return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

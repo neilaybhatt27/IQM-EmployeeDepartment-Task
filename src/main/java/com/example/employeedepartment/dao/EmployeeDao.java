@@ -10,9 +10,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
 import javax.sql.DataSource;
 
+import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.model.Employee;
 
 @Repository
@@ -53,7 +53,7 @@ public class EmployeeDao {
      * @param searchTerm    String used for filtering by name or id.
      * @return List of all employees found in the database
      */
-    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) throws SQLException {
         List<Employee> employees = new ArrayList<>();
         String query = "SELECT * FROM employee";
         int paramIndex = 0;
@@ -86,12 +86,12 @@ public class EmployeeDao {
                 employee.setDepartmentId(resultSet.getLong("department_id"));
                 employees.add(employee);
             }
+
+            return employees;
         } catch (SQLException ex) {
             logger.error("Error executing SQL query", ex);
-            throw new RuntimeException("Database error: "+ ex.getMessage());
+            throw ex;
         }
-
-        return employees;
     }
 
     /**
@@ -100,7 +100,7 @@ public class EmployeeDao {
      * @param id - id of the requested employee
      * @return Employee object of the specified id.
      */
-    public Employee getById(Long id) {
+    public Employee getById(Long id) throws SQLException {
         Employee employee = new Employee();
 
         try (Connection conn = dataSource.getConnection()) {
@@ -115,10 +115,16 @@ public class EmployeeDao {
                 employee.setRole(resultSet.getString("role"));
                 employee.setDepartmentId(resultSet.getLong("department_id"));
             }
+
+            if (employee.getId() == 0){
+                logger.error("Id not found in database");
+                throw new IdNotFoundException("Id not in database");
+            }
+            return employee;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Error executing SQL query");
+            throw e;
         }
-        return employee;
     }
 
     /**
