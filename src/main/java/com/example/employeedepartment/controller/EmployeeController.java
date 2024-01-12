@@ -76,7 +76,7 @@ public class EmployeeController {
             return new ResponseEntity<>(employees, HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
-            return new ResponseEntity<>("Invalid Parameter/s. Please check again.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);

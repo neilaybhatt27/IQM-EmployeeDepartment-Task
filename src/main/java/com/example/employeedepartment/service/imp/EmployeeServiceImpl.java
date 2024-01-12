@@ -45,9 +45,21 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
-        if (page < 0 || size <= 0 || !sortField.equals("id") && !sortField.equals("name") || !sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")) {
+        if(page < 0){
             logger.error("Error in passing parameters.");
-            throw new IllegalArgumentException("Invalid parameters");
+            throw new IllegalArgumentException("Invalid parameter: Page must be greater than or equal to 0");
+        }
+        if(size <= 0){
+            logger.error("Error in passing parameters.");
+            throw new IllegalArgumentException("Invalid parameter: Size must be greater than 0");
+        }
+        if(!sortField.equals("id") && !sortField.equals("name")){
+            logger.error("Error in passing parameters.");
+            throw new IllegalArgumentException("Invalid parameter: sortField must be either id or name");
+        }
+        if (!sortDirection.equals("asc") && !sortDirection.equals("desc") && !sortDirection.equals("ASC") && !sortDirection.equals("DESC")){
+            logger.error("Error in passing parameters.");
+            throw new IllegalArgumentException("Invalid parameter: sortDirection must be either of these. 1) asc/ASC, 2) desc/DESC");
         }
         logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
