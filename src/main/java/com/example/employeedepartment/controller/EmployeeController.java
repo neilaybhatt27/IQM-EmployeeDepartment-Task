@@ -1,5 +1,10 @@
 package com.example.employeedepartment.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
-
+@Api(value = "Employee Management System", tags = "Operations pertaining to employee in Employee Management System")
 @RestController
 @RequestMapping(path = "/employees")
 public class EmployeeController {
@@ -50,6 +55,12 @@ public class EmployeeController {
      * @param searchTerm    (Optional) Fetches data according to the input. It would happen either by name or id.
      * @return ArrayList containing all the employees and their details.
      */
+    @ApiOperation(value = "View a list of available employees which matches the criteria given in the parameters.", response = List.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved the list of employees."),
+            @ApiResponse(code = 400, message = "Invalid Parameters."),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource."),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden."),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     @GetMapping(path = "/all")
     public ResponseEntity<Object> getAllEmployees(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                   @RequestParam(value = "size", required = false, defaultValue = "5") int size,
@@ -63,10 +74,10 @@ public class EmployeeController {
             List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
             logger.info("Sent GET /employees response with {} employees", employees.size());
             return new ResponseEntity<>(employees, HttpStatus.OK);
-        } catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
             return new ResponseEntity<>("Invalid Parameter/s. Please check again.", HttpStatus.BAD_REQUEST);
-        } catch (RuntimeException ex){
+        } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -85,7 +96,7 @@ public class EmployeeController {
             Employee requestedEmployee = employeeService.getEmployeeById(id);
             logger.info("Sent GET /employees response with employee id = {}", id);
             return new ResponseEntity<>(requestedEmployee, HttpStatus.OK);
-        } catch (RuntimeException ex){
+        } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -97,6 +108,11 @@ public class EmployeeController {
      * @param newEmployee This request body contains details of the new Employee. It must have name, role and departmentId.
      * @return A success message string.
      */
+    @ApiOperation(value = "Add a new employee in the system", response = String.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully added a new employee."),
+            @ApiResponse(code = 400, message = "Invalid data types in the input."),
+            @ApiResponse(code = 401, message = "You are not authorized to view the resource."),
+            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden.")})
     @PostMapping(path = "/add")
     public @ResponseBody String createEmployee(@RequestBody Employee newEmployee) {
         employeeService.addEmployee(newEmployee);
