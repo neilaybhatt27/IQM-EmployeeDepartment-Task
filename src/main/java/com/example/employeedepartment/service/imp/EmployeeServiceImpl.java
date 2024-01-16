@@ -1,14 +1,13 @@
 package com.example.employeedepartment.service.imp;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.Employee;
 import com.example.employeedepartment.service.interfaces.EmployeeService;
@@ -16,9 +15,13 @@ import com.example.employeedepartment.service.interfaces.EmployeeService;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
-    private EmployeeDao employeeDao;
+    private final EmployeeDao employeeDao;
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
+    public EmployeeServiceImpl(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 
     /**
      * This function is a helper function, and it calls the save function of the EmployeeDao.
@@ -47,15 +50,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new IllegalArgumentException("Invalid parameters");
         }
         logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
-        List<Employee> employees = null;
         try {
-            employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
-        } catch (SQLException e) {
+            List<Employee> employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Finished processing getAllEmployees request with {} employees", employees.size());
+            return employees;
+        } catch (Exception e) {
             logger.error("Error occurred in database operation.");
             throw new RuntimeException("Some error occurred in the server.",e);
         }
-        logger.info("Finished processing getAllEmployees request with {} employees", employees.size());
-        return employees;
     }
 
     /**
@@ -71,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = employeeDao.getById(id);
             logger.info("Finished processing getEmployeeById request with employee id = {}", id);
             return employee;
-        } catch (SQLException | IdNotFoundException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new RuntimeException("Some error occurred in the server.", e);
         }
     }

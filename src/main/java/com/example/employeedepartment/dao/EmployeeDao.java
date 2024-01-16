@@ -1,27 +1,25 @@
 package com.example.employeedepartment.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import javax.sql.DataSource;
 
-import com.example.employeedepartment.exception.IdNotFoundException;
 import com.example.employeedepartment.model.Employee;
 
 @Repository
 public class EmployeeDao {
-    private final DataSource dataSource;
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
 
-    public EmployeeDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public EmployeeDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
@@ -30,15 +28,13 @@ public class EmployeeDao {
      * @param employee - Employee object received from client side
      */
     public void save(Employee employee) {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)");
-            pstmt.setString(1, employee.getName());
-            pstmt.setString(2, employee.getRole());
-            pstmt.setLong(3, employee.getDepartmentId());
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException();
-        }
+        String query = "INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)";
+        try {
+            logger.info("Executing SQL query: {}", query);
+            jdbcTemplate.update(query, employee.getName(), employee.getRole(), employee.getDepartmentId());
+        } catch (Exception ex) {
+            logger.error("Error executing SQL query", ex);
+            throw ex;        }
     }
 
     /**
@@ -53,11 +49,8 @@ public class EmployeeDao {
      * @param searchTerm    String used for filtering by name or id.
      * @return List of all employees found in the database
      */
-    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) throws SQLException {
-        List<Employee> employees = new ArrayList<>();
+    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
         String query = "SELECT * FROM employee";
-        int paramIndex = 0;
-
 
         if (searchTerm != null) {
             query += " WHERE id = ? OR name LIKE ?";
@@ -65,30 +58,18 @@ public class EmployeeDao {
 
         query += " ORDER BY " + sortField + " " + sortDirection + " LIMIT ? OFFSET ?";
 
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement(query);
+        BeanPropertyRowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
 
+        try {
             if (searchTerm != null) {
-                pstmt.setString(++paramIndex, searchTerm);
-                pstmt.setString(++paramIndex, searchTerm + "%");
+                logger.info("Executing SQL query: {}", query);
+                return jdbcTemplate.query(query, rowMapper, searchTerm, searchTerm + "%", size, page * size);
             }
-            pstmt.setInt(++paramIndex, size);
-            pstmt.setInt(++paramIndex, page * size);
-
-            logger.info("Executing SQL query: {}", query);
-            ResultSet resultSet = pstmt.executeQuery();
-
-            while (resultSet.next()) {
-                Employee employee = new Employee();
-                employee.setId(resultSet.getLong("id"));
-                employee.setName(resultSet.getString("name"));
-                employee.setRole(resultSet.getString("role"));
-                employee.setDepartmentId(resultSet.getLong("department_id"));
-                employees.add(employee);
+            else {
+                logger.info("Executing SQL query: {}", query);
+                return jdbcTemplate.query(query, rowMapper, size, page * size);
             }
-
-            return employees;
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
             throw ex;
         }
@@ -100,30 +81,15 @@ public class EmployeeDao {
      * @param id - id of the requested employee
      * @return Employee object of the specified id.
      */
-    public Employee getById(Long id) throws SQLException {
-        Employee employee = new Employee();
+    public Employee getById(Long id){
+        String query = "SELECT * FROM employee WHERE id = ?";
 
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM employee WHERE id = ?");
-            pstmt.setLong(1, id);
-            ResultSet resultSet = pstmt.executeQuery();
-
-            if (resultSet.next()) {
-                employee.setId(resultSet.getLong("id"));
-                employee.setName(resultSet.getString("name"));
-                employee.setRole(resultSet.getString("role"));
-                employee.setRole(resultSet.getString("role"));
-                employee.setDepartmentId(resultSet.getLong("department_id"));
-            }
-
-            if (employee.getId() == 0){
-                logger.error("Id not found in database");
-                throw new IdNotFoundException("Id not in database");
-            }
-            return employee;
-        } catch (SQLException e) {
+        try {
+            logger.info("Executing SQL query: {}", query);
+            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Employee.class), id);
+        } catch (EmptyResultDataAccessException e) {
             logger.error("Error executing SQL query");
-            throw e;
+            throw new RuntimeException("Employee not found with id: " + id);
         }
     }
 
@@ -134,14 +100,12 @@ public class EmployeeDao {
      * @param employee Employee object with the updated details
      */
     public void update(long id, Employee employee) {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE employee SET name = ?, role = ?, department_id = ? WHERE id = ?");
-            pstmt.setString(1, employee.getName());
-            pstmt.setString(2, employee.getRole());
-            pstmt.setLong(3, employee.getDepartmentId());
-            pstmt.setLong(4, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
+        String query = "UPDATE employee SET name = ?, role = ?, department_id = ? WHERE id = ?";
+        try {
+            logger.info("Executing SQL query: {}", query);
+            jdbcTemplate.update(query, employee.getName(), employee.getRole(), employee.getDepartmentId(), id);
+        } catch (Exception e) {
+            logger.error("Error executing SQL query");
             throw new RuntimeException(e);
         }
     }
@@ -152,11 +116,12 @@ public class EmployeeDao {
      * @param id - id of the employee that needs to be deleted
      */
     public void delete(long id) {
-        try (Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM employee WHERE id = ?");
-            pstmt.setLong(1, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
+        String query = "DELETE FROM employee WHERE id = ?";
+        try {
+            logger.info("Executing SQL query: {}", query);
+            jdbcTemplate.update(query, id);
+        } catch (Exception e) {
+            logger.error("Error executing SQL query");
             throw new RuntimeException(e);
         }
     }
