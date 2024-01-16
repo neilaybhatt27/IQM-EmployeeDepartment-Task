@@ -85,8 +85,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             Employee employee = employeeDao.getById(id);
             logger.info("Finished processing getEmployeeById request with employee id = {}", id);
             return employee;
-        } catch (EmptyResultDataAccessException e) {
-            throw new RuntimeException("Some error occurred in the server.", e);
+        } catch (RuntimeException e) {
+            logger.error("Error occurred in database operation.");
+            throw e;
         }
     }
 

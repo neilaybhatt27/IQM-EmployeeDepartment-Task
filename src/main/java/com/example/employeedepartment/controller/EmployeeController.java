@@ -79,7 +79,7 @@ public class EmployeeController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
-            return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -98,7 +98,7 @@ public class EmployeeController {
             return new ResponseEntity<>(requestedEmployee, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
-            return new ResponseEntity<>("Some error occurred in the server", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -146,4 +146,30 @@ public class EmployeeServiceImplTest {
 
         assertEquals(expectedEmployees.size(), actualEmployees.size());
     }
+
+    /**
+     * Test: Given input id which does not exist in the database, this test should return RuntimeException.
+     */
+    @Test
+    public void getEmployeeByIdWrongIdTest() {
+        long id = 14;
+
+        when(employeeDao.getById(id)).thenThrow(RuntimeException.class);
+        assertThrows(RuntimeException.class, () -> employeeService.getEmployeeById(id));
+    }
+
+    /**
+     * Test: Given valid input id which exists in the database,
+     * this should assert that the expected and the actual Employee object are same.
+     */
+    @Test
+    public void getEmployeeByIdValidInputTest() {
+        long id = 1;
+
+        Employee expectedEmployee = new Employee();
+        when(employeeDao.getById(id)).thenReturn(expectedEmployee);
+        Employee actualEmployee = employeeService.getEmployeeById(id);
+
+        assertEquals(expectedEmployee, actualEmployee);
+    }
 }
