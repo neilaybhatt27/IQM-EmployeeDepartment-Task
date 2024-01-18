@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.employeedepartment.model.Department;
 
 public interface DepartmentService {
-    List<Department> getAllDepartments();
+    List<Department> getAllDepartments(int page, int size, String sortField, String sortDirection, String searchTerm);
 
     Department getDepartmentById(Long id);
 

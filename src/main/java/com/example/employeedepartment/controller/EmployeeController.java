@@ -91,10 +91,10 @@ public class EmployeeController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
-        logger.info("Received GET /employees request with employee id = {}", id);
+        logger.info("Received GET /employees/{} request with employee id = {}", id, id);
         try {
             Employee requestedEmployee = employeeService.getEmployeeById(id);
-            logger.info("Sent GET /employees response with employee id = {}", id);
+            logger.info("Sent GET /employees/{} response with employee id = {}", id, id);
             return new ResponseEntity<>(requestedEmployee, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");

@@ -34,7 +34,8 @@ public class EmployeeDao {
             jdbcTemplate.update(query, employee.getName(), employee.getRole());
         } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
-            throw ex;        }
+            throw ex;
+        }
     }
 
     /**

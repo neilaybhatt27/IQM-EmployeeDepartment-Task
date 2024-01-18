@@ -1,48 +1,67 @@
 package com.example.employeedepartment.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 
 import com.example.employeedepartment.model.Department;
 
 @Repository
 public class DepartmentDao {
-    private final DataSource dataSource;
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentDao.class);
 
-    public DepartmentDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public DepartmentDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
-     * This function interacts with the database to fetch all the departments and its details.
-     * @return List of departments
+     * This function returns all the departments with pagination to reduce load.
+     * Also contains sorting by name and id feature.
+     * Also contains filtering by search term.
+     *
+     * @param page          page number for pagination.
+     * @param size          number of rows to be sent for a single page.
+     * @param sortField     Sort by id or by name.
+     * @param sortDirection Ascending or descending sorting.
+     * @param searchTerm    String used for filtering by name or id.
+     * @return List of all departments found in the database.
      */
-    public List<Department> getAll() {
-        List<Department> departments = new ArrayList<>();
+    public List<Department> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
+        String query = "SELECT * FROM department";
 
-        try(Connection conn = dataSource.getConnection()) {
-            Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM department");
-
-            while (resultSet.next()){
-                Department department = new Department();
-                department.setId(resultSet.getLong("id"));
-                department.setName(resultSet.getString("name"));
-                departments.add(department);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (searchTerm != null) {
+            query += " WHERE id = ? OR name LIKE ?";
         }
-        return departments;
+
+        query += " ORDER BY " + sortField + " " + sortDirection + " LIMIT ? OFFSET ?";
+
+        BeanPropertyRowMapper<Department> rowMapper = new BeanPropertyRowMapper<>(Department.class);
+
+        try {
+            if (searchTerm != null) {
+                logger.info("Executing SQL query: {}", query);
+                return jdbcTemplate.query(query, rowMapper, searchTerm, searchTerm + "%", size, page * size);
+            }
+            else {
+                logger.info("Executing SQL query: {}", query);
+                return jdbcTemplate.query(query, rowMapper, size, page * size);
+            }
+        } catch (Exception ex) {
+            logger.error("Error executing SQL query", ex);
+            throw ex;
+        }
     }
 
     /**
@@ -51,34 +70,42 @@ public class DepartmentDao {
      * @return Department object containing the requested department details.
      */
     public Department getById(Long id) {
-        Department department = new Department();
+        String query = "SELECT * FROM department WHERE id = ?";
 
-        try(Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM department WHERE id = ?");
-            pstmt.setLong(1, id);
-
-            ResultSet resultSet = pstmt.executeQuery();
-            if (resultSet.next()){
-                department.setId(resultSet.getLong("id"));
-                department.setName(resultSet.getString("name"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        try {
+            logger.info("Executing SQL query: {}", query);
+            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Department.class), id);
+        } catch (EmptyResultDataAccessException e) {
+            logger.error("Error executing SQL query");
+            throw new RuntimeException("Department not found with id: " + id);
         }
-        return department;
     }
 
     /**
      * This method adds a new department to the database.
+     * Adds Department name in the department table.
+     * Maps its id to the given region id in the input and adds both of them along with start date
+     * into the region_department table.
      * @param department Department object containing the info to be added in the database.
      */
     public void save(Department department) {
-        try(Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO department (name) VALUES (?)");
-            pstmt.setString(1, department.getName());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        String queryToAddInDepartmentTable = "INSERT INTO department (name) VALUES (?)";
+        String queryToAddInRegionDepartmentTable = "INSERT INTO region_department (reg_id, dept_id, dept_start_date) VALUES (?, ? ,?)";
+        KeyHolder holder = new GeneratedKeyHolder();
+        try {
+            logger.info("Executing SQL query: {}", queryToAddInDepartmentTable);
+            jdbcTemplate.update(connection -> {
+                PreparedStatement preparedStatement = connection.prepareStatement(queryToAddInDepartmentTable, new String[]{"id"});
+                preparedStatement.setString(1, department.getName());
+                return preparedStatement;
+            }, holder);
+            long departmentId = holder.getKey().longValue();
+
+            logger.info("Executing SQL query: {}", queryToAddInRegionDepartmentTable);
+            jdbcTemplate.update(queryToAddInRegionDepartmentTable, department.getRegId(), departmentId, department.getDeptStartDate());
+        } catch (Exception ex) {
+            logger.error("Error executing SQL query", ex);
+            throw ex;
         }
     }
 
@@ -88,12 +115,12 @@ public class DepartmentDao {
      * @param department Department object containing new details.
      */
     public void update(Long id, Department department) {
-        try(Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE department SET name = ? WHERE id = ?");
-            pstmt.setString(1, department.getName());
-            pstmt.setLong(2, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
+        String query = "UPDATE department SET name = ? WHERE id = ?";
+        try {
+            logger.info("Executing SQL query: {}", query);
+            jdbcTemplate.update(query, department.getName(), id);
+        } catch (Exception e) {
+            logger.error("Error executing SQL query");
             throw new RuntimeException(e);
         }
     }
@@ -103,11 +130,12 @@ public class DepartmentDao {
      * @param id id of the department that needs to be deleted.
      */
     public void delete(Long id) {
-        try(Connection conn = dataSource.getConnection()) {
-            PreparedStatement pstmt = conn.prepareStatement("DELETE FROM department WHERE id = ?");
-            pstmt.setLong(1, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
+        String query = "DELETE FROM department WHERE id = ?";
+        try {
+            logger.info("Executing SQL query: {}", query);
+            jdbcTemplate.update(query, id);
+        } catch (Exception e) {
+            logger.error("Error executing SQL query");
             throw new RuntimeException(e);
         }
     }
