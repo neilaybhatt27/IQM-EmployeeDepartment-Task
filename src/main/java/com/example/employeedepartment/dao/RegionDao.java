@@ -10,35 +10,36 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.Region;
 
 @Repository
-public class EmployeeDao {
+public class RegionDao {
     @Autowired
     private final JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegionDao.class);
 
-    public EmployeeDao(JdbcTemplate jdbcTemplate) {
+    public RegionDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
-     * This function adds employee details to the database.
+     * This function adds region details to the database.
      *
-     * @param employee - Employee object received from client side
+     * @param region - Region object received from service method
      */
-    public void save(Employee employee) {
-        String query = "INSERT INTO employee (name, role) VALUES (?, ?)";
+    public void save(Region region) {
+        String query = "INSERT INTO region (name, start_date) VALUES (?, ?)";
         try {
             logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, employee.getName(), employee.getRole());
+            jdbcTemplate.update(query, region.getName(), region.getStartDate());
         } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
-            throw ex;        }
+            throw ex;
+        }
     }
 
     /**
-     * This function returns all the employees with pagination to reduce load.
+     * This function returns all the regions with pagination to reduce load.
      * Also contains sorting by name and id feature.
      * Also contains filtering by search term.
      *
@@ -47,10 +48,10 @@ public class EmployeeDao {
      * @param sortField     Sort by id or by name.
      * @param sortDirection Ascending or descending sorting.
      * @param searchTerm    String used for filtering by name or id.
-     * @return List of all employees found in the database
+     * @return List of all regions found in the database
      */
-    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
-        String query = "SELECT * FROM employee";
+    public List<Region> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
+        String query = "SELECT * FROM region";
 
         if (searchTerm != null) {
             query += " WHERE id = ? OR name LIKE ?";
@@ -58,7 +59,7 @@ public class EmployeeDao {
 
         query += " ORDER BY " + sortField + " " + sortDirection + " LIMIT ? OFFSET ?";
 
-        BeanPropertyRowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        BeanPropertyRowMapper<Region> rowMapper = new BeanPropertyRowMapper<>(Region.class);
 
         try {
             if (searchTerm != null) {
@@ -76,17 +77,17 @@ public class EmployeeDao {
     }
 
     /**
-     * This function gets the specific employee by matching the id.
+     * This function gets the specific region by matching the id.
      *
      * @param id - id of the requested employee
-     * @return Employee object of the specified id.
+     * @return Region object of the specified id.
      */
-    public Employee getById(Long id){
-        String query = "SELECT * FROM employee WHERE id = ?";
+    public Region getById(Long id){
+        String query = "SELECT * FROM region WHERE id = ?";
 
         try {
             logger.info("Executing SQL query: {}", query);
-            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Employee.class), id);
+            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Region.class), id);
         } catch (EmptyResultDataAccessException e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException("Employee not found with id: " + id);
@@ -94,16 +95,16 @@ public class EmployeeDao {
     }
 
     /**
-     * This function updates the employee details of the specified employee in the database
+     * This function updates the region details of the specified region in the database
      *
-     * @param id       id of the employee that needs to be updated
-     * @param employee Employee object with the updated details
+     * @param id       id of the region that needs to be updated
+     * @param region Region object with the updated details
      */
-    public void update(long id, Employee employee) {
-        String query = "UPDATE employee SET name = ?, role = ? WHERE id = ?";
+    public void update(long id, Region region) {
+        String query = "UPDATE region SET name = ?, start_date = ?, end_date = ? WHERE id = ?";
         try {
             logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, employee.getName(), employee.getRole(), id);
+            jdbcTemplate.update(query, region.getName(), region.getStartDate(), region.getEndDate(), id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);
@@ -111,12 +112,12 @@ public class EmployeeDao {
     }
 
     /**
-     * This function deletes the specified employee from the database
+     * This function deletes the specified region from the database
      *
-     * @param id - id of the employee that needs to be deleted
+     * @param id - id of the region that needs to be deleted
      */
     public void delete(long id) {
-        String query = "DELETE FROM employee WHERE id = ?";
+        String query = "DELETE FROM region WHERE id = ?";
         try {
             logger.info("Executing SQL query: {}", query);
             jdbcTemplate.update(query, id);

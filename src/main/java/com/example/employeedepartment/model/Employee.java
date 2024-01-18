@@ -7,13 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ApiModel(description = "Details about an employee")
 public class Employee {
     @Id
@@ -23,6 +21,4 @@ public class Employee {
     private String name;
     @ApiModelProperty(notes = "The role/designation of the employee", example = "Engineer")
     private String role;
-    @ApiModelProperty(notes = "The id of the department the employee works in", example = "1")
-    private long departmentId;
 }

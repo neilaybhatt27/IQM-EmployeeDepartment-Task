@@ -69,10 +69,10 @@ public class EmployeeController {
                                                   @RequestParam(value = "searchTerm", required = false) String searchTerm,
                                                   HttpServletRequest request,
                                                   HttpServletResponse response) {
-        logger.info("Received GET /employees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
+        logger.info("Received GET /employees/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
             List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Sent GET /employees response with {} employees", employees.size());
+            logger.info("Sent GET /employees/all response with {} employees", employees.size());
             return new ResponseEntity<>(employees, HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
