@@ -194,10 +194,13 @@ public class DepartmentDao {
      * @param requestDepartment Department object containing new details.
      */
     public void update(Long id, RequestDepartment requestDepartment) {
-        String query = "UPDATE department SET name = ? WHERE id = ?";
+        String queryToUpdateInDepartmentTable = "UPDATE department SET name = ? WHERE id = ?";
+        String queryToUpdateInRegionDepartmentTable = "UPDATE region_department SET reg_id = ?, dept_start_date = ?, dept_end_date = ? WHERE dept_id = ?";
         try {
-            logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, requestDepartment.getName(), id);
+            logger.info("Executing SQL query: {}", queryToUpdateInDepartmentTable);
+            jdbcTemplate.update(queryToUpdateInDepartmentTable, requestDepartment.getName(), id);
+            logger.info("Executing SQL query: {}", queryToUpdateInRegionDepartmentTable);
+            jdbcTemplate.update(queryToUpdateInRegionDepartmentTable,requestDepartment.getRegId(), requestDepartment.getDeptStartDate(), requestDepartment.getDeptEndDate(), id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);
@@ -209,10 +212,13 @@ public class DepartmentDao {
      * @param id id of the department that needs to be deleted.
      */
     public void delete(Long id) {
-        String query = "DELETE FROM department WHERE id = ?";
+        String queryToDeleteFromRegionDepartmentTable = "DELETE FROM region_department WHERE dept_id = ?";
+        String queryToDeleteFromDepartmentTable = "DELETE FROM department WHERE id = ?";
         try {
-            logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, id);
+            logger.info("Executing SQL query: {}", queryToDeleteFromRegionDepartmentTable);
+            jdbcTemplate.update(queryToDeleteFromRegionDepartmentTable, id);
+            logger.info("Executing SQL query: {}", queryToDeleteFromDepartmentTable);
+            jdbcTemplate.update(queryToDeleteFromDepartmentTable, id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);
