@@ -4,17 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
-    @Id
+public class ResponseDepartment {
     private Long id;
     private String name;
-    private Long regId;
-    private LocalDate deptStartDate;
+    private List<Map<String, Object>> regionDetails;
+
 }

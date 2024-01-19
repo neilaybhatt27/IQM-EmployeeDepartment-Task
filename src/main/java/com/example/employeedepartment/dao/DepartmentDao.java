@@ -1,7 +1,11 @@
 package com.example.employeedepartment.dao;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +17,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-
-import com.example.employeedepartment.model.Department;
+import com.example.employeedepartment.model.RequestDepartment;
+import com.example.employeedepartment.model.ResponseDepartment;
 
 @Repository
 public class DepartmentDao {
@@ -38,30 +42,60 @@ public class DepartmentDao {
      * @param searchTerm    String used for filtering by name or id.
      * @return List of all departments found in the database.
      */
-    public List<Department> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
-        String query = "SELECT * FROM department";
+    public List<ResponseDepartment> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
+        List<Object> args = new ArrayList<>();
+        String query = "SELECT department.id, department.name AS name, region.name AS region, region_department.dept_start_date, region_department.dept_end_date FROM department JOIN region_department ON department.id = region_department.dept_id JOIN region ON region_department.reg_id = region.id INNER JOIN (SELECT id FROM department";
 
         if (searchTerm != null) {
-            query += " WHERE id = ? OR name LIKE ?";
+            query += " WHERE department.id = ? OR department.name LIKE ?";
+            args.add(searchTerm);
+            args.add("%"+searchTerm+"%");
         }
 
-        query += " ORDER BY " + sortField + " " + sortDirection + " LIMIT ? OFFSET ?";
-
-        BeanPropertyRowMapper<Department> rowMapper = new BeanPropertyRowMapper<>(Department.class);
-
+        query += " ORDER BY id LIMIT ? OFFSET ?) AS deptId ON department.id = deptId.id ORDER BY department." + sortField + " " + sortDirection;
+        args.add(size);
+        args.add(page * size);
+        Map<String, ResponseDepartment> deptNameObjectMap = new LinkedHashMap<>();
         try {
-            if (searchTerm != null) {
-                logger.info("Executing SQL query: {}", query);
-                return jdbcTemplate.query(query, rowMapper, searchTerm, searchTerm + "%", size, page * size);
-            }
-            else {
-                logger.info("Executing SQL query: {}", query);
-                return jdbcTemplate.query(query, rowMapper, size, page * size);
-            }
+            logger.info("Executing SQL query: {}", query);
+             jdbcTemplate.query(query, args.toArray(), (rs, rowNum) -> {
+                 ResponseDepartment responseDepartment;
+                 String deptName = rs.getString("name");
+
+                 // Retrieve or create the ResponseDepartment object
+                 if (!deptNameObjectMap.containsKey(deptName)) {
+                     responseDepartment = new ResponseDepartment();
+                     responseDepartment.setId(rs.getLong("id"));
+                     responseDepartment.setName(deptName);
+                     List<Map<String, Object>> regionDetailsList = new ArrayList<>();
+                     responseDepartment.setRegionDetails(regionDetailsList);
+                     deptNameObjectMap.put(deptName, responseDepartment);
+                 } else {
+                     responseDepartment = deptNameObjectMap.get(deptName);
+                 }
+
+                 // Create a new region details map for each row
+                 Map<String, Object> regionDetailsMap = new HashMap<>();
+                 regionDetailsMap.put("region", rs.getString("region"));
+                 regionDetailsMap.put("deptStartDate", rs.getDate("dept_start_date").toLocalDate());
+
+                 // Check if "dept_end_date" column is null
+                 if (rs.getObject("dept_end_date") != null) {
+                     regionDetailsMap.put("deptEndDate", rs.getDate("dept_end_date").toLocalDate());
+                 } else {
+                     // Handle null value
+                     regionDetailsMap.put("deptEndDate", null);
+                 }
+
+                 // Add the current region detail to the list
+                 responseDepartment.getRegionDetails().add(regionDetailsMap);
+                 return responseDepartment;
+             });
         } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
             throw ex;
         }
+        return new ArrayList<>(deptNameObjectMap.values());
     }
 
     /**
@@ -69,40 +103,85 @@ public class DepartmentDao {
      * @param id id of the department which needs to be fetched.
      * @return Department object containing the requested department details.
      */
-    public Department getById(Long id) {
-        String query = "SELECT * FROM department WHERE id = ?";
+    public ResponseDepartment getById(Long id) {
+        String query = "SELECT department.id, department.name AS name, region_department.reg_id, region.name AS region, region_department.dept_start_date, region_department.dept_end_date FROM department JOIN region_department ON department.id = region_department.dept_id JOIN region ON region_department.reg_id = region.id WHERE department.id = ?";
+        Map<String, ResponseDepartment> deptNameObjectMap = new HashMap<>();
 
         try {
             logger.info("Executing SQL query: {}", query);
-            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Department.class), id);
+            jdbcTemplate.query(query, (rs, numRow) -> {
+                ResponseDepartment responseDepartment;
+                String deptName = rs.getString("name");
+
+                // Retrieve or create the ResponseDepartment object
+                if (!deptNameObjectMap.containsKey(deptName)) {
+                    responseDepartment = new ResponseDepartment();
+                    responseDepartment.setId(rs.getLong("id"));
+                    responseDepartment.setName(deptName);
+                    List<Map<String, Object>> regionDetailsList = new ArrayList<>();
+                    responseDepartment.setRegionDetails(regionDetailsList);
+                    deptNameObjectMap.put(deptName, responseDepartment);
+                } else {
+                    responseDepartment = deptNameObjectMap.get(deptName);
+                }
+
+                // Create a new region details map for each row
+                Map<String, Object> regionDetailsMap = new HashMap<>();
+                regionDetailsMap.put("region", rs.getString("region"));
+                regionDetailsMap.put("deptStartDate", rs.getDate("dept_start_date").toLocalDate());
+
+                // Check if "dept_end_date" column is null
+                if (rs.getObject("dept_end_date") != null) {
+                    regionDetailsMap.put("deptEndDate", rs.getDate("dept_end_date").toLocalDate());
+                } else {
+                    // Handle null value
+                    regionDetailsMap.put("deptEndDate", null);
+                }
+
+                // Add the current region detail to the list
+                responseDepartment.getRegionDetails().add(regionDetailsMap);
+                return responseDepartment;
+            }, id);
         } catch (EmptyResultDataAccessException e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException("Department not found with id: " + id);
         }
+        Map.Entry<String, ResponseDepartment> entry = deptNameObjectMap.entrySet().iterator().next();
+        return entry.getValue();
     }
 
     /**
      * This method adds a new department to the database.
-     * Adds Department name in the department table.
+     * Checks if the department already exists in department table and region_department table. If yes then it only adds the same department in new region.
+     * If no, it adds Department name in the department table.
      * Maps its id to the given region id in the input and adds both of them along with start date
      * into the region_department table.
-     * @param department Department object containing the info to be added in the database.
+     * @param requestDepartment Department object containing the info to be added in the database.
      */
-    public void save(Department department) {
+    public void save(RequestDepartment requestDepartment) {
+        String queryToCheckIfDepartmentExists = "SELECT * FROM department WHERE name = ?";
         String queryToAddInDepartmentTable = "INSERT INTO department (name) VALUES (?)";
         String queryToAddInRegionDepartmentTable = "INSERT INTO region_department (reg_id, dept_id, dept_start_date) VALUES (?, ? ,?)";
         KeyHolder holder = new GeneratedKeyHolder();
+        long departmentId;
         try {
-            logger.info("Executing SQL query: {}", queryToAddInDepartmentTable);
-            jdbcTemplate.update(connection -> {
-                PreparedStatement preparedStatement = connection.prepareStatement(queryToAddInDepartmentTable, new String[]{"id"});
-                preparedStatement.setString(1, department.getName());
-                return preparedStatement;
-            }, holder);
-            long departmentId = holder.getKey().longValue();
+            logger.info("Executing SQL query: {}", queryToCheckIfDepartmentExists);
+            RequestDepartment existingRequestDepartment = jdbcTemplate.queryForObject(queryToCheckIfDepartmentExists, new BeanPropertyRowMapper<>(RequestDepartment.class), requestDepartment.getName());
+            if(existingRequestDepartment == null){
+                logger.info("Executing SQL query: {}", queryToAddInDepartmentTable);
+                jdbcTemplate.update(connection -> {
+                    PreparedStatement preparedStatement = connection.prepareStatement(queryToAddInDepartmentTable, new String[]{"id"});
+                    preparedStatement.setString(1, requestDepartment.getName());
+                    return preparedStatement;
+                }, holder);
+                departmentId = holder.getKey().longValue();
+            }
+            else {
+                departmentId = existingRequestDepartment.getId();
+            }
 
             logger.info("Executing SQL query: {}", queryToAddInRegionDepartmentTable);
-            jdbcTemplate.update(queryToAddInRegionDepartmentTable, department.getRegId(), departmentId, department.getDeptStartDate());
+            jdbcTemplate.update(queryToAddInRegionDepartmentTable, requestDepartment.getRegId(), departmentId, requestDepartment.getDeptStartDate());
         } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
             throw ex;
@@ -112,13 +191,13 @@ public class DepartmentDao {
     /**
      * This method updates the department details in the database.
      * @param id id of the department that needs to be updated.
-     * @param department Department object containing new details.
+     * @param requestDepartment Department object containing new details.
      */
-    public void update(Long id, Department department) {
+    public void update(Long id, RequestDepartment requestDepartment) {
         String query = "UPDATE department SET name = ? WHERE id = ?";
         try {
             logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, department.getName(), id);
+            jdbcTemplate.update(query, requestDepartment.getName(), id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);

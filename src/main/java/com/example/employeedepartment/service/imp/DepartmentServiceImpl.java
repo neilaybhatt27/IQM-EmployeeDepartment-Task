@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.employeedepartment.dao.DepartmentDao;
-import com.example.employeedepartment.model.Department;
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestDepartment;
+import com.example.employeedepartment.model.ResponseDepartment;
 import com.example.employeedepartment.service.interfaces.DepartmentService;
 
 @Service
@@ -30,7 +30,7 @@ public class DepartmentServiceImpl implements DepartmentService {
      * @return ArrayList containing all the departments and their details.
      */
     @Override
-    public List<Department> getAllDepartments(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public List<ResponseDepartment> getAllDepartments(int page, int size, String sortField, String sortDirection, String searchTerm) {
         if(page < 0){
             logger.error("Error in passing parameters.");
             throw new IllegalArgumentException("Invalid parameter: Page must be greater than or equal to 0");
@@ -49,9 +49,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
         logger.info("Processing getAllDepartments request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<Department> departments = departmentDao.getAll(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Finished processing getAllDepartments request with {} departments", departments.size());
-            return departments;
+            List<ResponseDepartment> responseDepartments = departmentDao.getAll(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Finished processing getAllDepartments request with {} departments", responseDepartments.size());
+            return responseDepartments;
         } catch (Exception e) {
             logger.error("Error occurred in database operation.");
             throw new RuntimeException("Some error occurred in the server.",e);
@@ -63,12 +63,12 @@ public class DepartmentServiceImpl implements DepartmentService {
      * @return Department object of the requested department.
      */
     @Override
-    public Department getDepartmentById(Long id) {
+    public ResponseDepartment getDepartmentById(Long id) {
         try {
             logger.info("Processing getDepartmentById request with id={}", id);
-            Department department = departmentDao.getById(id);
+            ResponseDepartment responseDepartment = departmentDao.getById(id);
             logger.info("Finished processing getDepartmentById request with department id = {}", id);
-            return department;
+            return responseDepartment;
         } catch (RuntimeException e) {
             logger.error("Error occurred in database operation.");
             throw e;
@@ -77,13 +77,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * This service function calls the save() method of the DepartmentDao and works to add details in the system.
-     * @param department Department object containing details of the new department such as name, region id and start date.
+     * @param requestDepartment Department object containing details of the new department such as name, region id and start date.
      */
     @Override
-    public void addDepartment(Department department) {
+    public void addDepartment(RequestDepartment requestDepartment) {
         try {
-            logger.info("Processing addDepartment request with department name = {}, region id = {} and start date = {}", department.getName(), department.getRegId(), department.getDeptStartDate());
-            departmentDao.save(department);
+            logger.info("Processing addDepartment request with department name = {}, region id = {} and start date = {}", requestDepartment.getName(), requestDepartment.getRegId(), requestDepartment.getDeptStartDate());
+            departmentDao.save(requestDepartment);
             logger.info("Finished processing addDepartment successfully.");
 
         } catch (Exception e){
@@ -95,11 +95,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     /**
      * This service function calls the update() method of the DepartmentDao and works to update the details in the system.
      * @param id id of the department which needs to be updated.
-     * @param department Department object containing the new details.
+     * @param requestDepartment Department object containing the new details.
      */
     @Override
-    public void updateDepartment(Long id, Department department) {
-        departmentDao.update(id, department);
+    public void updateDepartment(Long id, RequestDepartment requestDepartment) {
+        departmentDao.update(id, requestDepartment);
     }
 
     /**

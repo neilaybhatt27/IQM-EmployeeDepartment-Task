@@ -2,16 +2,17 @@ package com.example.employeedepartment.service.interfaces;
 
 import java.util.List;
 
-import com.example.employeedepartment.model.Department;
+import com.example.employeedepartment.model.RequestDepartment;
+import com.example.employeedepartment.model.ResponseDepartment;
 
 public interface DepartmentService {
-    List<Department> getAllDepartments(int page, int size, String sortField, String sortDirection, String searchTerm);
+    List<ResponseDepartment> getAllDepartments(int page, int size, String sortField, String sortDirection, String searchTerm);
 
-    Department getDepartmentById(Long id);
+    ResponseDepartment getDepartmentById(Long id);
 
-    void addDepartment(Department department);
+    void addDepartment(RequestDepartment requestDepartment);
 
-    void updateDepartment(Long id, Department department);
+    void updateDepartment(Long id, RequestDepartment requestDepartment);
 
     void deleteDepartment(Long id);
 }

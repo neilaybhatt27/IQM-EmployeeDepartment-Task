@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.employeedepartment.model.Department;
+import com.example.employeedepartment.model.RequestDepartment;
+import com.example.employeedepartment.model.ResponseDepartment;
 import com.example.employeedepartment.service.imp.DepartmentServiceImpl;
 
 
@@ -55,9 +56,9 @@ public class DepartmentController {
                                                     @RequestParam(value = "searchTerm", required = false) String searchTerm) {
         logger.info("Received GET /employees/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<Department> departments = departmentService.getAllDepartments(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Sent GET /departments/all response with {} departments", departments.size());
-            return new ResponseEntity<>(departments, HttpStatus.OK);
+            List<ResponseDepartment> responseDepartments = departmentService.getAllDepartments(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Sent GET /departments/all response with {} departments", responseDepartments.size());
+            return new ResponseEntity<>(responseDepartments, HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -77,9 +78,9 @@ public class DepartmentController {
     public ResponseEntity<Object> getDepartmentById(@PathVariable Long id) {
         logger.info("Received GET /employees/{} request with employee id = {}", id, id);
         try {
-            Department requestedDepartment = departmentService.getDepartmentById(id);
+            ResponseDepartment requestedResponseDepartment = departmentService.getDepartmentById(id);
             logger.info("Sent GET /employees/{} response with employee id = {}", id, id);
-            return new ResponseEntity<>(requestedDepartment, HttpStatus.OK);
+            return new ResponseEntity<>(requestedResponseDepartment, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -89,13 +90,13 @@ public class DepartmentController {
     /**
      * This POST API request adds a new Department to the system.
      *
-     * @param newDepartment This request body contains details of the new Department. It must have a name, region id and start date.
+     * @param newRequestDepartment This request body contains details of the new Department. It must have a name, region id and start date.
      * @return A success message string or error message.
      */
     @PostMapping(path = "/add")
-    public ResponseEntity<Object> createDepartment(@RequestBody Department newDepartment) {
+    public ResponseEntity<Object> createDepartment(@RequestBody RequestDepartment newRequestDepartment) {
         try {
-            departmentService.addDepartment(newDepartment);
+            departmentService.addDepartment(newRequestDepartment);
             return new ResponseEntity<>("Department created successfully", HttpStatus.OK);
         } catch (RuntimeException e){
             logger.error("Some error occurred in the server");
@@ -106,12 +107,12 @@ public class DepartmentController {
     /**
      * This PUT API request updates the department details and sends back a success message to the client.
      * @param id id of the department that needs to be updated.
-     * @param updatedDepartment Department object with the updated details.
+     * @param updatedRequestDepartment Department object with the updated details.
      * @return String containing success message.
      */
     @PutMapping("/{id}")
-    public @ResponseBody String updateDepartment(@PathVariable Long id, @RequestBody Department updatedDepartment) {
-        departmentService.updateDepartment(id, updatedDepartment);
+    public @ResponseBody String updateDepartment(@PathVariable Long id, @RequestBody RequestDepartment updatedRequestDepartment) {
+        departmentService.updateDepartment(id, updatedRequestDepartment);
         return "Department updated successfully";
     }
 
