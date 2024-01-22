@@ -3,16 +3,16 @@ package com.example.employeedepartment.service.interfaces;
 import java.util.List;
 
 
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestEmployee;
 
 public interface EmployeeService {
-    void addEmployee(Employee employee);
+    void addEmployee(RequestEmployee requestEmployee);
 
-    List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm);
+    List<RequestEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm);
 
-    Employee getEmployeeById(Long id);
+    RequestEmployee getEmployeeById(Long id);
 
-    void updateEmployee(Long id, Employee employee);
+    void updateEmployee(Long id, RequestEmployee requestEmployee);
 
     void deleteEmployee(Long id);
 }

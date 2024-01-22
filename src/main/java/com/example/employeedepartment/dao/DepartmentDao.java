@@ -166,8 +166,10 @@ public class DepartmentDao {
         long departmentId;
         try {
             logger.info("Executing SQL query: {}", queryToCheckIfDepartmentExists);
-            RequestDepartment existingRequestDepartment = jdbcTemplate.queryForObject(queryToCheckIfDepartmentExists, new BeanPropertyRowMapper<>(RequestDepartment.class), requestDepartment.getName());
-            if(existingRequestDepartment == null){
+            try{
+                RequestDepartment exisitngRequestDepartment = jdbcTemplate.queryForObject(queryToCheckIfDepartmentExists, new BeanPropertyRowMapper<>(RequestDepartment.class), requestDepartment.getName());
+                departmentId = exisitngRequestDepartment.getId();
+            } catch (EmptyResultDataAccessException e){
                 logger.info("Executing SQL query: {}", queryToAddInDepartmentTable);
                 jdbcTemplate.update(connection -> {
                     PreparedStatement preparedStatement = connection.prepareStatement(queryToAddInDepartmentTable, new String[]{"id"});
@@ -175,9 +177,6 @@ public class DepartmentDao {
                     return preparedStatement;
                 }, holder);
                 departmentId = holder.getKey().longValue();
-            }
-            else {
-                departmentId = existingRequestDepartment.getId();
             }
 
             logger.info("Executing SQL query: {}", queryToAddInRegionDepartmentTable);

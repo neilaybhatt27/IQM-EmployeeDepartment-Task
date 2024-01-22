@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.employeedepartment.dao.EmployeeDao;
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestEmployee;
 import com.example.employeedepartment.service.interfaces.EmployeeService;
 
 @Service
@@ -25,11 +25,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * This function is a helper function, and it calls the save function of the EmployeeDao.
      *
-     * @param employee Employee object
+     * @param requestEmployee Employee object
      */
     @Override
-    public void addEmployee(Employee employee) {
-        employeeDao.save(employee);
+    public void addEmployee(RequestEmployee requestEmployee) {
+        employeeDao.save(requestEmployee);
     }
 
     /**
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return ArrayList containing all the employees and their details.
      */
     @Override
-    public List<Employee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public List<RequestEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
         if(page < 0){
             logger.error("Error in passing parameters.");
             throw new IllegalArgumentException("Invalid parameter: Page must be greater than or equal to 0");
@@ -62,9 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<Employee> employees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Finished processing getAllEmployees request with {} employees", employees.size());
-            return employees;
+            List<RequestEmployee> requestEmployees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Finished processing getAllEmployees request with {} employees", requestEmployees.size());
+            return requestEmployees;
         } catch (Exception e) {
             logger.error("Error occurred in database operation.");
             throw new RuntimeException("Some error occurred in the server.",e);
@@ -78,12 +78,12 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return Employee object containing the details of the requested employee id.
      */
     @Override
-    public Employee getEmployeeById(Long id) {
+    public RequestEmployee getEmployeeById(Long id) {
         try {
             logger.info("Processing getEmployeeById request with id={}", id);
-            Employee employee = employeeDao.getById(id);
+            RequestEmployee requestEmployee = employeeDao.getById(id);
             logger.info("Finished processing getEmployeeById request with employee id = {}", id);
-            return employee;
+            return requestEmployee;
         } catch (RuntimeException e) {
             logger.error("Error occurred in database operation.");
             throw e;
@@ -94,11 +94,11 @@ public class EmployeeServiceImpl implements EmployeeService {
      * This is a helper function which calls the update method of employeeDao
      *
      * @param id       id of the employee whose details needs to be updated
-     * @param employee Employee object containing the updated details
+     * @param requestEmployee Employee object containing the updated details
      */
     @Override
-    public void updateEmployee(Long id, Employee employee) {
-        employeeDao.update(id, employee);
+    public void updateEmployee(Long id, RequestEmployee requestEmployee) {
+        employeeDao.update(id, requestEmployee);
     }
 
     /**

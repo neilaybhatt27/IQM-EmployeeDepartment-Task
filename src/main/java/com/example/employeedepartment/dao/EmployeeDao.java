@@ -1,5 +1,6 @@
 package com.example.employeedepartment.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestEmployee;
 
 @Repository
 public class EmployeeDao {
@@ -25,13 +28,31 @@ public class EmployeeDao {
     /**
      * This function adds employee details to the database.
      *
-     * @param employee - Employee object received from client side
+     * @param requestEmployee - Employee object received from client side
      */
-    public void save(Employee employee) {
-        String query = "INSERT INTO employee (name, role) VALUES (?, ?)";
+    public void save(RequestEmployee requestEmployee) {
+        String queryToCheckIfEmployeeExists = "SELECT * FROM employee WHERE email = ?";
+        String queryToInsertInEmployeeTable = "INSERT INTO employee (name, role, email) VALUES (?, ?, ?)";
+        String queryToInsertInEmployeeRegionDepartmentTable = "INSERT INTO employee_region_department (emp_id, reg_dept_id, emp_start_date, emp_end_date) VALUES (?, ?, ?, ?)";
+        KeyHolder holder = new GeneratedKeyHolder();
+        long employeeId;
         try {
-            logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, employee.getName(), employee.getRole());
+            try {
+                logger.info("Executing SQL query: {}", queryToCheckIfEmployeeExists);
+                RequestEmployee existingRequestEmployee = jdbcTemplate.queryForObject(queryToCheckIfEmployeeExists, new BeanPropertyRowMapper<>(RequestEmployee.class), requestEmployee.getEmail());
+                employeeId = existingRequestEmployee.getId();
+            } catch (EmptyResultDataAccessException e){
+                logger.info("Executing SQL query: {}", queryToInsertInEmployeeTable);
+                jdbcTemplate.update(connection -> {
+                    PreparedStatement preparedStatement = connection.prepareStatement(queryToInsertInEmployeeTable, new String[]{"id"});
+                    preparedStatement.setString(1, requestEmployee.getName());
+                    preparedStatement.setString(2, requestEmployee.getRole());
+                    return preparedStatement;
+                }, holder);
+                employeeId = holder.getKey().longValue();
+            }
+            logger.info("Executing SQL query: {}", queryToInsertInEmployeeRegionDepartmentTable);
+            jdbcTemplate.update(queryToInsertInEmployeeRegionDepartmentTable, employeeId, requestEmployee.getRegDeptId(), requestEmployee.getEmpStartDate(), requestEmployee.getEmpEndDate());
         } catch (Exception ex) {
             logger.error("Error executing SQL query", ex);
             throw ex;
@@ -50,7 +71,7 @@ public class EmployeeDao {
      * @param searchTerm    String used for filtering by name or id.
      * @return List of all employees found in the database
      */
-    public List<Employee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public List<RequestEmployee> getAll(int page, int size, String sortField, String sortDirection, String searchTerm) {
         String query = "SELECT * FROM employee";
 
         if (searchTerm != null) {
@@ -59,7 +80,7 @@ public class EmployeeDao {
 
         query += " ORDER BY " + sortField + " " + sortDirection + " LIMIT ? OFFSET ?";
 
-        BeanPropertyRowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        BeanPropertyRowMapper<RequestEmployee> rowMapper = new BeanPropertyRowMapper<>(RequestEmployee.class);
 
         try {
             if (searchTerm != null) {
@@ -82,12 +103,12 @@ public class EmployeeDao {
      * @param id - id of the requested employee
      * @return Employee object of the specified id.
      */
-    public Employee getById(Long id){
+    public RequestEmployee getById(Long id){
         String query = "SELECT * FROM employee WHERE id = ?";
 
         try {
             logger.info("Executing SQL query: {}", query);
-            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(Employee.class), id);
+            return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(RequestEmployee.class), id);
         } catch (EmptyResultDataAccessException e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException("Employee not found with id: " + id);
@@ -98,13 +119,16 @@ public class EmployeeDao {
      * This function updates the employee details of the specified employee in the database
      *
      * @param id       id of the employee that needs to be updated
-     * @param employee Employee object with the updated details
+     * @param requestEmployee Employee object with the updated details
      */
-    public void update(long id, Employee employee) {
-        String query = "UPDATE employee SET name = ?, role = ? WHERE id = ?";
+    public void update(long id, RequestEmployee requestEmployee) {
+        String queryToUpdateInEmployeeTable = "UPDATE employee SET name = ?, role = ?, email = ? WHERE id = ?";
+        String queryToUpdateInEmployeeRegionDepartmentTable = "UPDATE employee_region_department SET emp_id = ?, reg_dept_id = ?, emp_start_date = ?, emp_end_date = ? WHERE ID = ?";
         try {
-            logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, employee.getName(), employee.getRole(), id);
+            logger.info("Executing SQL query: {}", queryToUpdateInEmployeeTable);
+            jdbcTemplate.update(queryToUpdateInEmployeeTable, requestEmployee.getName(), requestEmployee.getRole(), requestEmployee.getEmail(), id);
+            logger.info("Executing SQL query: {}", queryToUpdateInEmployeeRegionDepartmentTable);
+            jdbcTemplate.update(queryToUpdateInEmployeeRegionDepartmentTable, id, requestEmployee.getRegDeptId(), requestEmployee.getEmpStartDate(), requestEmployee.getEmpEndDate(), id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);
@@ -117,10 +141,13 @@ public class EmployeeDao {
      * @param id - id of the employee that needs to be deleted
      */
     public void delete(long id) {
-        String query = "DELETE FROM employee WHERE id = ?";
+        String queryToDeleteFromEmployeeRegionDepartmentTable = "DELETE FROM employee_region_department WHERE id = ?";
+        String queryToDeleteFromEmployeeTable = "DELETE FROM employee WHERE id = ?";
         try {
-            logger.info("Executing SQL query: {}", query);
-            jdbcTemplate.update(query, id);
+            logger.info("Executing SQL query: {}", queryToDeleteFromEmployeeRegionDepartmentTable);
+            jdbcTemplate.update(queryToDeleteFromEmployeeRegionDepartmentTable, id);
+            logger.info("Executing SQL query: {}", queryToDeleteFromEmployeeTable);
+            jdbcTemplate.update(queryToDeleteFromEmployeeTable, id);
         } catch (Exception e) {
             logger.error("Error executing SQL query");
             throw new RuntimeException(e);

@@ -80,45 +80,45 @@
 2024-01-16 12:01:43,292 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-16 12:01:43,293 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2024-01-16 12:01:43,336 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 43 ms
-2024-01-16 12:02:15,208 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-2] Received GET /employees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-16 12:02:15,208 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-2] Received GET /requestEmployees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
 2024-01-16 12:02:15,210 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-2] Processing getAllEmployees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
-2024-01-16 12:02:15,302 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-2] Executing SQL query: SELECT * FROM employee ORDER BY id asc LIMIT ? OFFSET ?
-2024-01-16 12:02:15,484 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-2] Finished processing getAllEmployees request with 5 employees
-2024-01-16 12:02:15,486 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-2] Sent GET /employees response with 5 employees
-2024-01-16 12:02:39,657 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)
-2024-01-16 12:02:55,933 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-4] Received GET /employees request with employee id = 14
+2024-01-16 12:02:15,302 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-2] Executing SQL query: SELECT * FROM requestEmployee ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-16 12:02:15,484 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-2] Finished processing getAllEmployees request with 5 requestEmployees
+2024-01-16 12:02:15,486 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-2] Sent GET /requestEmployees response with 5 requestEmployees
+2024-01-16 12:02:39,657 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: INSERT INTO requestEmployee (name, role, department_id) VALUES (?, ?, ?)
+2024-01-16 12:02:55,933 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-4] Received GET /requestEmployees request with requestEmployee id = 14
 2024-01-16 12:02:55,936 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-4] Processing getEmployeeById request with id=14
-2024-01-16 12:02:55,939 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-4] Executing SQL query: SELECT * FROM employee WHERE id = ?
-2024-01-16 12:02:56,062 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-4] Finished processing getEmployeeById request with employee id = 14
-2024-01-16 12:02:56,064 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-4] Sent GET /employees response with employee id = 14
-2024-01-16 12:03:00,541 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Received GET /employees request with employee id = 13
+2024-01-16 12:02:55,939 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-4] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
+2024-01-16 12:02:56,062 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-4] Finished processing getEmployeeById request with requestEmployee id = 14
+2024-01-16 12:02:56,064 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-4] Sent GET /requestEmployees response with requestEmployee id = 14
+2024-01-16 12:03:00,541 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Received GET /requestEmployees request with requestEmployee id = 13
 2024-01-16 12:03:00,545 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-5] Processing getEmployeeById request with id=13
-2024-01-16 12:03:00,546 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM employee WHERE id = ?
-2024-01-16 12:03:00,656 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-5] Finished processing getEmployeeById request with employee id = 13
-2024-01-16 12:03:00,656 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Sent GET /employees response with employee id = 13
-2024-01-16 12:03:03,752 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Received GET /employees request with employee id = 14
+2024-01-16 12:03:00,546 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
+2024-01-16 12:03:00,656 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-5] Finished processing getEmployeeById request with requestEmployee id = 13
+2024-01-16 12:03:00,656 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Sent GET /requestEmployees response with requestEmployee id = 13
+2024-01-16 12:03:03,752 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Received GET /requestEmployees request with requestEmployee id = 14
 2024-01-16 12:03:03,753 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Processing getEmployeeById request with id=14
-2024-01-16 12:03:03,753 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-7] Executing SQL query: SELECT * FROM employee WHERE id = ?
-2024-01-16 12:03:03,851 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Finished processing getEmployeeById request with employee id = 14
-2024-01-16 12:03:03,852 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Sent GET /employees response with employee id = 14
-2024-01-16 12:03:17,661 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-4] Executing SQL query: DELETE FROM employee WHERE id = ?
-2024-01-16 12:03:34,897 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-6] Executing SQL query: INSERT INTO employee (name, role, department_id) VALUES (?, ?, ?)
-2024-01-16 12:03:41,137 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Received GET /employees request with employee id = 14
+2024-01-16 12:03:03,753 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-7] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
+2024-01-16 12:03:03,851 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Finished processing getEmployeeById request with requestEmployee id = 14
+2024-01-16 12:03:03,852 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Sent GET /requestEmployees response with requestEmployee id = 14
+2024-01-16 12:03:17,661 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-4] Executing SQL query: DELETE FROM requestEmployee WHERE id = ?
+2024-01-16 12:03:34,897 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-6] Executing SQL query: INSERT INTO requestEmployee (name, role, department_id) VALUES (?, ?, ?)
+2024-01-16 12:03:41,137 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Received GET /requestEmployees request with requestEmployee id = 14
 2024-01-16 12:03:41,138 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-1] Processing getEmployeeById request with id=14
-2024-01-16 12:03:41,138 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: SELECT * FROM employee WHERE id = ?
+2024-01-16 12:03:41,138 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
 2024-01-16 12:03:41,236 ERROR com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Error executing SQL query
 2024-01-16 12:03:41,258 ERROR com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Some error occurred in the server
-2024-01-16 12:03:45,407 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-10] Received GET /employees request with employee id = 15
+2024-01-16 12:03:45,407 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-10] Received GET /requestEmployees request with requestEmployee id = 15
 2024-01-16 12:03:45,412 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-10] Processing getEmployeeById request with id=15
-2024-01-16 12:03:45,415 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-10] Executing SQL query: SELECT * FROM employee WHERE id = ?
-2024-01-16 12:03:45,530 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-10] Finished processing getEmployeeById request with employee id = 15
-2024-01-16 12:03:45,532 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-10] Sent GET /employees response with employee id = 15
-2024-01-16 12:04:00,860 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-9] Executing SQL query: DELETE FROM employee WHERE id = ?
-2024-01-16 12:04:05,349 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-9] Received GET /employees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-16 12:03:45,415 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-10] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
+2024-01-16 12:03:45,530 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-10] Finished processing getEmployeeById request with requestEmployee id = 15
+2024-01-16 12:03:45,532 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-10] Sent GET /requestEmployees response with requestEmployee id = 15
+2024-01-16 12:04:00,860 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-9] Executing SQL query: DELETE FROM requestEmployee WHERE id = ?
+2024-01-16 12:04:05,349 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-9] Received GET /requestEmployees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
 2024-01-16 12:04:05,351 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-9] Processing getAllEmployees request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
-2024-01-16 12:04:05,352 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-9] Executing SQL query: SELECT * FROM employee ORDER BY id asc LIMIT ? OFFSET ?
-2024-01-16 12:04:05,467 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-9] Finished processing getAllEmployees request with 5 employees
-2024-01-16 12:04:05,468 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-9] Sent GET /employees response with 5 employees
+2024-01-16 12:04:05,352 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-9] Executing SQL query: SELECT * FROM requestEmployee ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-16 12:04:05,467 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-9] Finished processing getAllEmployees request with 5 requestEmployees
+2024-01-16 12:04:05,468 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-9] Sent GET /requestEmployees response with 5 requestEmployees
 2024-01-16 12:04:09,712 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-9] Shutting down ExecutorService 'applicationTaskExecutor'
 2024-01-16 12:04:09,715 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-01-16 12:04:09,727 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
@@ -162,16 +162,16 @@
 2024-01-16 12:37:14,766 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-16 12:37:14,768 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2024-01-16 12:37:14,819 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 51 ms
-2024-01-16 12:37:27,546 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Received GET /employees request with employee id = 2
+2024-01-16 12:37:27,546 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Received GET /requestEmployees request with requestEmployee id = 2
 2024-01-16 12:37:27,554 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-1] Processing getEmployeeById request with id=2
-2024-01-16 12:37:27,617 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: SELECT * FROM employee WHERE id = ?
+2024-01-16 12:37:27,617 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
 2024-01-16 12:37:27,800 ERROR com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-1] Error executing SQL query
 2024-01-16 12:37:27,808 ERROR com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-1] Some error occurred in the server
-2024-01-16 12:37:33,047 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Received GET /employees request with employee id = 1
+2024-01-16 12:37:33,047 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Received GET /requestEmployees request with requestEmployee id = 1
 2024-01-16 12:37:33,051 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Processing getEmployeeById request with id=1
-2024-01-16 12:37:33,052 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-7] Executing SQL query: SELECT * FROM employee WHERE id = ?
-2024-01-16 12:37:33,159 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Finished processing getEmployeeById request with employee id = 1
-2024-01-16 12:37:33,160 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Sent GET /employees response with employee id = 1
+2024-01-16 12:37:33,052 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-7] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
+2024-01-16 12:37:33,159 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-7] Finished processing getEmployeeById request with requestEmployee id = 1
+2024-01-16 12:37:33,160 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-7] Sent GET /requestEmployees response with requestEmployee id = 1
 2024-01-16 12:42:51,395 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-9] Shutting down ExecutorService 'applicationTaskExecutor'
 2024-01-16 12:42:51,401 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-01-16 12:42:51,420 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
@@ -215,9 +215,9 @@
 2024-01-16 12:46:27,234 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-16 12:46:27,236 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2024-01-16 12:46:27,277 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 41 ms
-2024-01-16 12:46:47,684 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Received GET /employees request with employee id = 14
+2024-01-16 12:46:47,684 INFO com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Received GET /requestEmployees request with requestEmployee id = 14
 2024-01-16 12:46:47,689 INFO com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-5] Processing getEmployeeById request with id=14
-2024-01-16 12:46:47,767 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM employee WHERE id = ?
+2024-01-16 12:46:47,767 INFO com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM requestEmployee WHERE id = ?
 2024-01-16 12:46:47,942 ERROR com.example.employeedepartment.dao.EmployeeDao [http-nio-8080-exec-5] Error executing SQL query
 2024-01-16 12:46:47,954 ERROR com.example.employeedepartment.service.imp.EmployeeServiceImpl [http-nio-8080-exec-5] Error occurred in database operation.
 2024-01-16 12:46:47,955 ERROR com.example.employeedepartment.controller.EmployeeController [http-nio-8080-exec-5] Some error occurred in the server

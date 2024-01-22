@@ -97,6 +97,7 @@ public class DepartmentController {
     public ResponseEntity<Object> createDepartment(@RequestBody RequestDepartment newRequestDepartment) {
         try {
             departmentService.addDepartment(newRequestDepartment);
+            logger.info("Sent POST /employees/add response with success message.");
             return new ResponseEntity<>("Department created successfully", HttpStatus.OK);
         } catch (RuntimeException e){
             logger.error("Some error occurred in the server");

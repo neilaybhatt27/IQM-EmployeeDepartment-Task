@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestEmployee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 @Api(value = "Employee Management System", tags = "Operations pertaining to employee in Employee Management System")
@@ -71,9 +71,9 @@ public class EmployeeController {
                                                   HttpServletResponse response) {
         logger.info("Received GET /employees/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<Employee> employees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Sent GET /employees/all response with {} employees", employees.size());
-            return new ResponseEntity<>(employees, HttpStatus.OK);
+            List<RequestEmployee> requestEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Sent GET /employees/all response with {} employees", requestEmployees.size());
+            return new ResponseEntity<>(requestEmployees, HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -93,9 +93,9 @@ public class EmployeeController {
     public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
         logger.info("Received GET /employees/{} request with employee id = {}", id, id);
         try {
-            Employee requestedEmployee = employeeService.getEmployeeById(id);
+            RequestEmployee requestedRequestEmployee = employeeService.getEmployeeById(id);
             logger.info("Sent GET /employees/{} response with employee id = {}", id, id);
-            return new ResponseEntity<>(requestedEmployee, HttpStatus.OK);
+            return new ResponseEntity<>(requestedRequestEmployee, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -105,7 +105,7 @@ public class EmployeeController {
     /**
      * This POST API request adds a new Employee to the system.
      *
-     * @param newEmployee This request body contains details of the new Employee. It must have name, role and departmentId.
+     * @param newRequestEmployee This request body contains details of the new Employee. It must have name, role and departmentId.
      * @return A success message string.
      */
     @ApiOperation(value = "Add a new employee in the system", response = String.class)
@@ -114,8 +114,8 @@ public class EmployeeController {
             @ApiResponse(code = 401, message = "You are not authorized to view the resource."),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden.")})
     @PostMapping(path = "/add")
-    public @ResponseBody String createEmployee(@RequestBody Employee newEmployee) {
-        employeeService.addEmployee(newEmployee);
+    public @ResponseBody String createEmployee(@RequestBody RequestEmployee newRequestEmployee) {
+        employeeService.addEmployee(newRequestEmployee);
         return "Employee added successfully";
     }
 
@@ -123,12 +123,12 @@ public class EmployeeController {
      * This PUT API request updates the employee details according to the input from the client.
      *
      * @param id              the id which is passed as a parameter in the API endpoint. Refers to the id in the Employee table in the database.
-     * @param updatedEmployee Contains the updates required from the request body. Needs to have name, role and departmentId in the request.
+     * @param updatedRequestEmployee Contains the updates required from the request body. Needs to have name, role and departmentId in the request.
      * @return A success message String
      */
     @PutMapping(path = "/{id}")
-    public @ResponseBody String updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
-        employeeService.updateEmployee(id, updatedEmployee);
+    public @ResponseBody String updateEmployee(@PathVariable Long id, @RequestBody RequestEmployee updatedRequestEmployee) {
+        employeeService.updateEmployee(id, updatedRequestEmployee);
         return "Employee updated successfully";
     }
 
