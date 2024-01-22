@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.RequestEmployee;
+import com.example.employeedepartment.model.ResponseEmployee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -140,11 +141,11 @@ public class RequestEmployeeServiceImplTest {
         String sortDirection = "asc";
         String searchTerm = "";
 
-        List<RequestEmployee> expectedRequestEmployees = new ArrayList<>();
+        List<ResponseEmployee> expectedRequestEmployees = new ArrayList<>();
         when(employeeDao.getAll(page, size, sortField, sortDirection, searchTerm)).thenReturn(expectedRequestEmployees);
-        List<RequestEmployee> actualRequestEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+        List<ResponseEmployee> actualResponseEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
 
-        assertEquals(expectedRequestEmployees.size(), actualRequestEmployees.size());
+        assertEquals(expectedRequestEmployees.size(), actualResponseEmployees.size());
     }
 
     /**
@@ -166,10 +167,10 @@ public class RequestEmployeeServiceImplTest {
     public void getEmployeeByIdValidInputTest() {
         long id = 1;
 
-        RequestEmployee expectedRequestEmployee = new RequestEmployee();
-        when(employeeDao.getById(id)).thenReturn(expectedRequestEmployee);
-        RequestEmployee actualRequestEmployee = employeeService.getEmployeeById(id);
+        ResponseEmployee expectedResponseEmployee = new ResponseEmployee();
+        when(employeeDao.getById(id)).thenReturn(expectedResponseEmployee);
+        ResponseEmployee actualResponseEmployee = employeeService.getEmployeeById(id);
 
-        assertEquals(expectedRequestEmployee, actualRequestEmployee);
+        assertEquals(expectedResponseEmployee, actualResponseEmployee);
     }
 }

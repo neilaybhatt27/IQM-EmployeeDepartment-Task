@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.employeedepartment.dao.EmployeeDao;
 import com.example.employeedepartment.model.RequestEmployee;
+import com.example.employeedepartment.model.ResponseEmployee;
 import com.example.employeedepartment.service.interfaces.EmployeeService;
 
 @Service
@@ -43,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return ArrayList containing all the employees and their details.
      */
     @Override
-    public List<RequestEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
+    public List<ResponseEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm) {
         if(page < 0){
             logger.error("Error in passing parameters.");
             throw new IllegalArgumentException("Invalid parameter: Page must be greater than or equal to 0");
@@ -62,9 +63,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         logger.info("Processing getAllEmployees request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<RequestEmployee> requestEmployees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Finished processing getAllEmployees request with {} employees", requestEmployees.size());
-            return requestEmployees;
+            List<ResponseEmployee> responseEmployees = employeeDao.getAll(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Finished processing getAllEmployees request with {} employees", responseEmployees.size());
+            return responseEmployees;
         } catch (Exception e) {
             logger.error("Error occurred in database operation.");
             throw new RuntimeException("Some error occurred in the server.",e);
@@ -78,12 +79,12 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return Employee object containing the details of the requested employee id.
      */
     @Override
-    public RequestEmployee getEmployeeById(Long id) {
+    public ResponseEmployee getEmployeeById(Long id) {
         try {
             logger.info("Processing getEmployeeById request with id={}", id);
-            RequestEmployee requestEmployee = employeeDao.getById(id);
+            ResponseEmployee responseEmployee = employeeDao.getById(id);
             logger.info("Finished processing getEmployeeById request with employee id = {}", id);
-            return requestEmployee;
+            return responseEmployee;
         } catch (RuntimeException e) {
             logger.error("Error occurred in database operation.");
             throw e;

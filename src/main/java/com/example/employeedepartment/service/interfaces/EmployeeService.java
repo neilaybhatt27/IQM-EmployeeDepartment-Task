@@ -4,13 +4,14 @@ import java.util.List;
 
 
 import com.example.employeedepartment.model.RequestEmployee;
+import com.example.employeedepartment.model.ResponseEmployee;
 
 public interface EmployeeService {
     void addEmployee(RequestEmployee requestEmployee);
 
-    List<RequestEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm);
+    List<ResponseEmployee> getAllEmployees(int page, int size, String sortField, String sortDirection, String searchTerm);
 
-    RequestEmployee getEmployeeById(Long id);
+    ResponseEmployee getEmployeeById(Long id);
 
     void updateEmployee(Long id, RequestEmployee requestEmployee);
 

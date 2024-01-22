@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.employeedepartment.model.RequestEmployee;
+import com.example.employeedepartment.model.ResponseEmployee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 @Api(value = "Employee Management System", tags = "Operations pertaining to employee in Employee Management System")
@@ -71,9 +72,9 @@ public class EmployeeController {
                                                   HttpServletResponse response) {
         logger.info("Received GET /employees/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
-            List<RequestEmployee> requestEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
-            logger.info("Sent GET /employees/all response with {} employees", requestEmployees.size());
-            return new ResponseEntity<>(requestEmployees, HttpStatus.OK);
+            List<ResponseEmployee> responseEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+            logger.info("Sent GET /employees/all response with {} employees", responseEmployees.size());
+            return new ResponseEntity<>(responseEmployees, HttpStatus.OK);
         } catch (IllegalArgumentException ex) {
             logger.error("Error in passing parameters.");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -93,9 +94,9 @@ public class EmployeeController {
     public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
         logger.info("Received GET /employees/{} request with employee id = {}", id, id);
         try {
-            RequestEmployee requestedRequestEmployee = employeeService.getEmployeeById(id);
+            ResponseEmployee requestedResponseEmployee = employeeService.getEmployeeById(id);
             logger.info("Sent GET /employees/{} response with employee id = {}", id, id);
-            return new ResponseEntity<>(requestedRequestEmployee, HttpStatus.OK);
+            return new ResponseEntity<>(requestedResponseEmployee, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
