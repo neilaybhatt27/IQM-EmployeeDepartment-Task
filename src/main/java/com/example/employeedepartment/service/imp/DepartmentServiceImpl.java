@@ -1,6 +1,7 @@
 package com.example.employeedepartment.service.imp;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +101,23 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void updateDepartment(Long id, RequestDepartment requestDepartment) {
         departmentDao.update(id, requestDepartment);
+    }
+
+    /**
+     * @param deptId
+     * @param updates
+     */
+    @Override
+    public void updateEndDate(Long deptId, Map<String, Object> updates) {
+        try {
+            logger.info("Processing updateEndDate request with department id = {}, region id = {} and end date = {}", deptId, updates.get("regId"), updates.get("deptEndDate"));
+            departmentDao.saveEndDate(deptId, updates);
+            logger.info("Finished processing addDepartment successfully.");
+
+        } catch (Exception e){
+            logger.error("Error occurred in database operation.");
+            throw new RuntimeException("Some error occurred in the server.", e);
+        }
     }
 
     /**

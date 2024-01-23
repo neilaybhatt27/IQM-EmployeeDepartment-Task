@@ -206,6 +206,23 @@ public class DepartmentDao {
         }
     }
 
+    public void saveEndDate(Long deptId, Map<String, Object> updates){
+        String queryToFetchRegDeptId = "SELECT reg_dept_id FROM employee_region_department JOIN region_department ON employee_region_department.reg_dept_id = region_department.id WHERE region_department.reg_id = ? AND region_department.dept_id = ? LIMIT 1";
+        String queryToUpdateEmployeeRegionDepartmentTable = "UPDATE employee_region_department SET emp_end_date = ? WHERE reg_dept_id = ?";
+        String queryToUpdateRegionDepartmentTable = "UPDATE region_department SET dept_end_date = ? WHERE reg_id = ? AND dept_id = ?";
+        try {
+            logger.info("Executing SQL query: {}", queryToFetchRegDeptId);
+            Long regDeptId = jdbcTemplate.queryForObject(queryToFetchRegDeptId, Long.class, updates.get("regId"), deptId);
+            logger.info("Executing SQL query: {}", queryToUpdateEmployeeRegionDepartmentTable);
+            jdbcTemplate.update(queryToUpdateEmployeeRegionDepartmentTable, updates.get("deptEndDate"), regDeptId);
+            logger.info("Executing SQL query: {}", queryToUpdateRegionDepartmentTable);
+            jdbcTemplate.update(queryToUpdateRegionDepartmentTable, updates.get("deptEndDate"), updates.get("regId"), deptId);
+        } catch (Exception e){
+            logger.error("Error executing SQL query");
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method deletes the department from the database.
      * @param id id of the department that needs to be deleted.
