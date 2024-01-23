@@ -113,7 +113,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         try {
             logger.info("Processing updateEndDate request with department id = {}, region id = {} and end date = {}", deptId, updates.get("regId"), updates.get("deptEndDate"));
             departmentDao.saveEndDate(deptId, updates);
-            logger.info("Finished processing addDepartment successfully.");
+            logger.info("Finished processing updateEndDate successfully.");
 
         } catch (Exception e){
             logger.error("Error occurred in database operation.");

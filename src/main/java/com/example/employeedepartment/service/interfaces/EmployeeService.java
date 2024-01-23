@@ -1,6 +1,7 @@
 package com.example.employeedepartment.service.interfaces;
 
 import java.util.List;
+import java.util.Map;
 
 
 import com.example.employeedepartment.model.RequestEmployee;
@@ -14,6 +15,8 @@ public interface EmployeeService {
     ResponseEmployee getEmployeeById(Long id);
 
     void updateEmployee(Long id, RequestEmployee requestEmployee);
+
+    void updateEmployeeEndDate(Long empId, Map<String, Object> updates);
 
     void deleteEmployee(Long id);
 }

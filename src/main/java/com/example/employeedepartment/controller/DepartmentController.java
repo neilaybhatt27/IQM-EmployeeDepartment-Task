@@ -123,9 +123,9 @@ public class DepartmentController {
      * This PATCH API updates the end date of the department in the system.
      * @param deptId id of the department whose end date needs to be added or updated.
      * @param updates - JSON object which contains the region id and end date of the department as values.
-     * @return Updated Response Department object.
+     * @return Success message string
      */
-    @PatchMapping("/{deptId}")
+    @PatchMapping(path = "/{deptId}")
     public ResponseEntity<Object> updateEndDate (@PathVariable Long deptId, @RequestBody Map<String, Object> updates){
         logger.info("Received PATCH /departments/{} request with department id = {}, region id = {} and end date = {}", deptId, deptId, updates.get("regId"), updates.get("deptEndDate"));
         try {
