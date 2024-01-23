@@ -206,9 +206,16 @@ public class DepartmentDao {
         }
     }
 
+    /**
+     * This DAO method interacts with region_department and employee_region_department tables of the database.
+     * It first adds the end date to the employees currently working in the department.
+     * Then it adds the end date to the region_department so that department becomes closed.
+     * @param deptId id of the department that needs to be closed.
+     * @param updates Map containing region id and end date as values.
+     */
     public void saveEndDate(Long deptId, Map<String, Object> updates){
         String queryToFetchRegDeptId = "SELECT reg_dept_id FROM employee_region_department JOIN region_department ON employee_region_department.reg_dept_id = region_department.id WHERE region_department.reg_id = ? AND region_department.dept_id = ? LIMIT 1";
-        String queryToUpdateEmployeeRegionDepartmentTable = "UPDATE employee_region_department SET emp_end_date = ? WHERE reg_dept_id = ?";
+        String queryToUpdateEmployeeRegionDepartmentTable = "UPDATE employee_region_department SET emp_end_date = ? WHERE reg_dept_id = ? AND emp_end_date IS NULL";
         String queryToUpdateRegionDepartmentTable = "UPDATE region_department SET dept_end_date = ? WHERE reg_id = ? AND dept_id = ?";
         try {
             logger.info("Executing SQL query: {}", queryToFetchRegDeptId);

@@ -104,8 +104,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     /**
-     * @param deptId
-     * @param updates
+     * This service function calls the saveEndDate() method of Department DAO and saves the end date of the department in the system.
+     * @param deptId id of the department that is closing.
+     * @param updates Map that contains region id and end date as values.
      */
     @Override
     public void updateEndDate(Long deptId, Map<String, Object> updates) {
