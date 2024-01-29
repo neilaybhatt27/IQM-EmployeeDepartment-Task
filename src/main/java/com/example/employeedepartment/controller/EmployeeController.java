@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -131,6 +133,24 @@ public class EmployeeController {
     public @ResponseBody String updateEmployee(@PathVariable Long id, @RequestBody RequestEmployee updatedRequestEmployee) {
         employeeService.updateEmployee(id, updatedRequestEmployee);
         return "Employee updated successfully";
+    }
+
+    /**
+     * This PATCH API adds or updates the end date of an employee in a department of a region.
+     * @param empId id of the employee whose end date needs to be added or updated.
+     * @param updates - Map containing region id, department id and end date as values.
+     * @return Success message string
+     */
+    @PatchMapping(path = "/{empId}")
+    public ResponseEntity<Object> updateEmployeeEndDate(@PathVariable Long empId, @RequestBody Map<String, Object> updates){
+        logger.info("Received PATCH /employees/{} request with employee id = {}, department id = {}, regionId = {} and end date = {}", empId, empId, updates.get("deptId"), updates.get("regId"), updates.get("empEndDate"));
+        try {
+            employeeService.updateEmployeeEndDate(empId, updates);
+            logger.info("Sent PATCH /departments/{} response with updated employee.", empId);
+            return new ResponseEntity<>("Added or updated end date successfully", HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

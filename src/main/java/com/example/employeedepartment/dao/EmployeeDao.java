@@ -206,6 +206,28 @@ public class EmployeeDao {
     }
 
     /**
+     * This DAO method interacts with employee_region_department table in the database.
+     * It first fetches the reg_dept_id from region department using department id and region id.
+     * Then it adds or updates the end date in the employee_region_department table of the corresponding employee id
+     * and region department id.
+     * @param empId id of the employee.
+     * @param updates Map containing region id, department id and end date.
+     */
+    public void saveEndDate(Long empId, Map<String, Object> updates){
+        String queryToFetchRegDeptId = "SELECT reg_dept_id FROM employee_region_department JOIN region_department ON employee_region_department.reg_dept_id = region_department.id WHERE region_department.reg_id = ? AND region_department.dept_id = ? LIMIT 1";
+        String queryToUpdateInEmployeeRegionDepartmentTable = "UPDATE employee_region_department SET emp_end_date = ? WHERE reg_dept_id = ? AND emp_id = ?";
+        try {
+            logger.info("Executing SQL query: {}", queryToFetchRegDeptId);
+            Long regDeptId = jdbcTemplate.queryForObject(queryToFetchRegDeptId, Long.class, updates.get("regId"), updates.get("deptId"));
+            logger.info("Executing SQL query: {}", queryToUpdateInEmployeeRegionDepartmentTable);
+            jdbcTemplate.update(queryToUpdateInEmployeeRegionDepartmentTable, updates.get("empEndDate"), regDeptId, empId);
+        } catch (Exception e){
+            logger.error("Error executing SQL query");
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * This function deletes the specified employee from the database
      *
      * @param id - id of the employee that needs to be deleted

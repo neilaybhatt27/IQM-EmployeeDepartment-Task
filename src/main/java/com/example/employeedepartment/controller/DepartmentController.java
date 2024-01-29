@@ -1,12 +1,14 @@
 package com.example.employeedepartment.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +56,7 @@ public class DepartmentController {
                                                     @RequestParam(value = "sortField", required = false, defaultValue = "id") String sortField,
                                                     @RequestParam(value = "sortDirection", required = false, defaultValue = "asc") String sortDirection,
                                                     @RequestParam(value = "searchTerm", required = false) String searchTerm) {
-        logger.info("Received GET /employees/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
+        logger.info("Received GET /departments/all request with page={}, size={}, sortField={}, sortDirection={}, searchTerm={}", page, size, sortField, sortDirection, searchTerm);
         try {
             List<ResponseDepartment> responseDepartments = departmentService.getAllDepartments(page, size, sortField, sortDirection, searchTerm);
             logger.info("Sent GET /departments/all response with {} departments", responseDepartments.size());
@@ -76,10 +78,10 @@ public class DepartmentController {
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Object> getDepartmentById(@PathVariable Long id) {
-        logger.info("Received GET /employees/{} request with employee id = {}", id, id);
+        logger.info("Received GET /departments/{} request with id = {}", id, id);
         try {
             ResponseDepartment requestedResponseDepartment = departmentService.getDepartmentById(id);
-            logger.info("Sent GET /employees/{} response with employee id = {}", id, id);
+            logger.info("Sent GET /departments/{} response with id = {}", id, id);
             return new ResponseEntity<>(requestedResponseDepartment, HttpStatus.OK);
         } catch (RuntimeException ex) {
             logger.error("Some error occurred in the server");
@@ -115,6 +117,25 @@ public class DepartmentController {
     public @ResponseBody String updateDepartment(@PathVariable Long id, @RequestBody RequestDepartment updatedRequestDepartment) {
         departmentService.updateDepartment(id, updatedRequestDepartment);
         return "Department updated successfully";
+    }
+
+    /**
+     * This PATCH API updates the end date of the department in the system.
+     * @param deptId id of the department whose end date needs to be added or updated.
+     * @param updates - JSON object which contains the region id and end date of the department as values.
+     * @return Success message string
+     */
+    @PatchMapping(path = "/{deptId}")
+    public ResponseEntity<Object> updateEndDate (@PathVariable Long deptId, @RequestBody Map<String, Object> updates){
+        logger.info("Received PATCH /departments/{} request with department id = {}, region id = {} and end date = {}", deptId, deptId, updates.get("regId"), updates.get("deptEndDate"));
+        try {
+            departmentService.updateEndDate(deptId, updates);
+            logger.info("Sent PATCH /departments/{} response with updated department.", deptId);
+            return new ResponseEntity<>("Added or updated end date successfully", HttpStatus.OK);
+        } catch (RuntimeException e){
+            logger.error("Some error occurred in the server");
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

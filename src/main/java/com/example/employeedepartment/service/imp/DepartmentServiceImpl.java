@@ -1,6 +1,7 @@
 package com.example.employeedepartment.service.imp;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +101,24 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void updateDepartment(Long id, RequestDepartment requestDepartment) {
         departmentDao.update(id, requestDepartment);
+    }
+
+    /**
+     * This service function calls the saveEndDate() method of Department DAO and saves the end date of the department in the system.
+     * @param deptId id of the department that is closing.
+     * @param updates Map that contains region id and end date as values.
+     */
+    @Override
+    public void updateEndDate(Long deptId, Map<String, Object> updates) {
+        try {
+            logger.info("Processing updateEndDate request with department id = {}, region id = {} and end date = {}", deptId, updates.get("regId"), updates.get("deptEndDate"));
+            departmentDao.saveEndDate(deptId, updates);
+            logger.info("Finished processing updateEndDate successfully.");
+
+        } catch (Exception e){
+            logger.error("Error occurred in database operation.");
+            throw new RuntimeException("Some error occurred in the server.", e);
+        }
     }
 
     /**
