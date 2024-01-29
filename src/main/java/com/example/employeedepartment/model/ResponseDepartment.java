@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
-    @Id
+public class ResponseDepartment {
     private Long id;
     private String name;
+    private List<Map<String, Object>> regionDetails;
+
 }

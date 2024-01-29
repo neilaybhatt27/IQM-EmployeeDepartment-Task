@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>employee-department</artifactId>
+	<artifactId>requestEmployee-requestDepartment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>employee-department</name>
+	<name>requestEmployee-requestDepartment</name>
 	<description>Employee and Department Management System</description>
 	<properties>
 		<java.version>1.8</java.version>

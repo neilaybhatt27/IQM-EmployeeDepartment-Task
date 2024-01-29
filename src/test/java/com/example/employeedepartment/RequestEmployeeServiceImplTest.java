@@ -10,14 +10,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.example.employeedepartment.dao.EmployeeDao;
-import com.example.employeedepartment.model.Employee;
+import com.example.employeedepartment.model.RequestEmployee;
+import com.example.employeedepartment.model.ResponseEmployee;
 import com.example.employeedepartment.service.imp.EmployeeServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-public class EmployeeServiceImplTest {
+public class RequestEmployeeServiceImplTest {
     @Mock
     private EmployeeDao employeeDao;
 
@@ -140,11 +141,11 @@ public class EmployeeServiceImplTest {
         String sortDirection = "asc";
         String searchTerm = "";
 
-        List<Employee> expectedEmployees = new ArrayList<>();
-        when(employeeDao.getAll(page, size, sortField, sortDirection, searchTerm)).thenReturn(expectedEmployees);
-        List<Employee> actualEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
+        List<ResponseEmployee> expectedRequestEmployees = new ArrayList<>();
+        when(employeeDao.getAll(page, size, sortField, sortDirection, searchTerm)).thenReturn(expectedRequestEmployees);
+        List<ResponseEmployee> actualResponseEmployees = employeeService.getAllEmployees(page, size, sortField, sortDirection, searchTerm);
 
-        assertEquals(expectedEmployees.size(), actualEmployees.size());
+        assertEquals(expectedRequestEmployees.size(), actualResponseEmployees.size());
     }
 
     /**
@@ -166,10 +167,10 @@ public class EmployeeServiceImplTest {
     public void getEmployeeByIdValidInputTest() {
         long id = 1;
 
-        Employee expectedEmployee = new Employee();
-        when(employeeDao.getById(id)).thenReturn(expectedEmployee);
-        Employee actualEmployee = employeeService.getEmployeeById(id);
+        ResponseEmployee expectedResponseEmployee = new ResponseEmployee();
+        when(employeeDao.getById(id)).thenReturn(expectedResponseEmployee);
+        ResponseEmployee actualResponseEmployee = employeeService.getEmployeeById(id);
 
-        assertEquals(expectedEmployee, actualEmployee);
+        assertEquals(expectedResponseEmployee, actualResponseEmployee);
     }
 }

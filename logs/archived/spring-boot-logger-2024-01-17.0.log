@@ -1,0 +1,342 @@
+2024-01-17 18:43:23,975 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting EmployeeDepartmentApplication on 53s-MacBook-Air.local with PID 5770 (/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes started by neilaybhatt in /Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task)
+2024-01-17 18:43:23,980 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.1.1.RELEASE, Spring v5.1.3.RELEASE
+2024-01-17 18:43:23,981 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2024-01-17 18:43:24,118 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-17 18:43:24,163 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-17 18:43:25,609 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data repositories in DEFAULT mode.
+2024-01-17 18:43:25,637 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 23ms. Found 0 repository interfaces.
+2024-01-17 18:43:26,194 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [restartedMain] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9948303f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-01-17 18:43:26,809 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2024-01-17 18:43:26,834 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:43:26,846 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-01-17 18:43:26,848 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet Engine: Apache Tomcat/9.0.13
+2024-01-17 18:43:26,931 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/neilaybhatt/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2024-01-17 18:43:27,057 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-01-17 18:43:27,058 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2893 ms
+2024-01-17 18:43:27,329 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2024-01-17 18:43:28,584 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2024-01-17 18:43:28,733 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2024-01-17 18:43:28,771 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate Core {5.3.7.Final}
+2024-01-17 18:43:28,773 INFO org.hibernate.cfg.Environment [restartedMain] HHH000206: hibernate.properties not found
+2024-01-17 18:43:28,911 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2024-01-17 18:43:29,007 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-01-17 18:43:29,236 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:43:29,457 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'regionController' defined in file [/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes/com/example/employeedepartment/controller/RegionController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.employeedepartment.service.imp.RegionServiceImpl' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-01-17 18:43:29,457 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:43:29,466 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown initiated...
+2024-01-17 18:43:29,808 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown completed.
+2024-01-17 18:43:29,818 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Stopping service [Tomcat]
+2024-01-17 18:43:29,863 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-01-17 18:43:29,984 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'regionController' defined in file [/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes/com/example/employeedepartment/controller/RegionController.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.employeedepartment.service.imp.RegionServiceImpl' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:769)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:218)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1308)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1154)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:538)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:498)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:846)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:863)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:546)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.example.employeedepartment.EmployeeDepartmentApplication.main(EmployeeDepartmentApplication.java:13)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.employeedepartment.service.imp.RegionServiceImpl' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.raiseNoMatchingBeanFound(DefaultListableBeanFactory.java:1644)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1203)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1164)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:857)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:760)
+	... 24 common frames omitted
+2024-01-17 18:45:35,937 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting EmployeeDepartmentApplication on 53s-MacBook-Air.local with PID 5785 (/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes started by neilaybhatt in /Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task)
+2024-01-17 18:45:35,939 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.1.1.RELEASE, Spring v5.1.3.RELEASE
+2024-01-17 18:45:35,941 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2024-01-17 18:45:36,062 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-17 18:45:36,062 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-17 18:45:37,508 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data repositories in DEFAULT mode.
+2024-01-17 18:45:37,537 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 25ms. Found 0 repository interfaces.
+2024-01-17 18:45:38,083 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [restartedMain] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$80231e14] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-01-17 18:45:38,695 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2024-01-17 18:45:38,724 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:45:38,737 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-01-17 18:45:38,738 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet Engine: Apache Tomcat/9.0.13
+2024-01-17 18:45:38,823 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/neilaybhatt/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2024-01-17 18:45:38,953 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-01-17 18:45:38,954 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2892 ms
+2024-01-17 18:45:39,214 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2024-01-17 18:45:40,306 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2024-01-17 18:45:40,461 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2024-01-17 18:45:40,494 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate Core {5.3.7.Final}
+2024-01-17 18:45:40,496 INFO org.hibernate.cfg.Environment [restartedMain] HHH000206: hibernate.properties not found
+2024-01-17 18:45:40,626 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2024-01-17 18:45:40,741 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-01-17 18:45:40,949 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:45:41,750 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-17 18:45:41,961 INFO springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [restartedMain] Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2024-01-17 18:45:42,140 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2024-01-17 18:45:42,169 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2024-01-17 18:45:42,504 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Context refreshed
+2024-01-17 18:45:42,527 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Found 1 custom documentation plugin(s)
+2024-01-17 18:45:42,622 INFO springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [restartedMain] Scanning for api listing references
+2024-01-17 18:45:43,032 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: createEmployeeUsingPOST_1
+2024-01-17 18:45:43,036 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: deleteEmployeeUsingDELETE_1
+2024-01-17 18:45:43,045 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: updateEmployeeUsingPUT_1
+2024-01-17 18:45:43,082 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:45:43,097 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Using a shared selector for servlet write/read
+2024-01-17 18:45:43,124 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-17 18:45:43,129 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started EmployeeDepartmentApplication in 7.686 seconds (JVM running for 8.257)
+2024-01-17 18:50:21,880 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-17 18:50:21,884 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2024-01-17 18:50:21,932 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 48 ms
+2024-01-17 18:50:22,146 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-2] Executing SQL query: INSERT INTO region (name, start_date) VALUES (?, ?)
+2024-01-17 18:51:07,773 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-9] Shutting down ExecutorService 'applicationTaskExecutor'
+2024-01-17 18:51:07,779 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:51:07,785 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
+2024-01-17 18:51:08,284 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown completed.
+2024-01-17 18:51:12,192 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting EmployeeDepartmentApplication on 53s-MacBook-Air.local with PID 5859 (/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes started by neilaybhatt in /Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task)
+2024-01-17 18:51:12,195 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.1.1.RELEASE, Spring v5.1.3.RELEASE
+2024-01-17 18:51:12,197 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2024-01-17 18:51:12,316 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-17 18:51:12,318 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-17 18:51:13,800 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data repositories in DEFAULT mode.
+2024-01-17 18:51:13,831 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 27ms. Found 0 repository interfaces.
+2024-01-17 18:51:14,365 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [restartedMain] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$cbed8154] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-01-17 18:51:15,038 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2024-01-17 18:51:15,064 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:51:15,075 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-01-17 18:51:15,076 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet Engine: Apache Tomcat/9.0.13
+2024-01-17 18:51:15,158 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/neilaybhatt/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2024-01-17 18:51:15,321 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-01-17 18:51:15,322 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 3004 ms
+2024-01-17 18:51:15,627 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2024-01-17 18:51:16,648 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2024-01-17 18:51:16,787 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2024-01-17 18:51:16,818 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate Core {5.3.7.Final}
+2024-01-17 18:51:16,819 INFO org.hibernate.cfg.Environment [restartedMain] HHH000206: hibernate.properties not found
+2024-01-17 18:51:16,937 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2024-01-17 18:51:17,092 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-01-17 18:51:17,315 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:51:17,996 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-17 18:51:18,248 INFO springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [restartedMain] Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2024-01-17 18:51:18,466 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2024-01-17 18:51:18,493 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2024-01-17 18:51:18,976 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Context refreshed
+2024-01-17 18:51:18,990 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Found 1 custom documentation plugin(s)
+2024-01-17 18:51:19,087 INFO springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [restartedMain] Scanning for api listing references
+2024-01-17 18:51:19,536 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: createEmployeeUsingPOST_1
+2024-01-17 18:51:19,542 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: deleteEmployeeUsingDELETE_1
+2024-01-17 18:51:19,564 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: updateEmployeeUsingPUT_1
+2024-01-17 18:51:19,588 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:51:19,597 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Using a shared selector for servlet write/read
+2024-01-17 18:51:19,618 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-17 18:51:19,624 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started EmployeeDepartmentApplication in 7.931 seconds (JVM running for 8.503)
+2024-01-17 18:51:38,570 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-17 18:51:38,572 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2024-01-17 18:51:38,618 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 45 ms
+2024-01-17 18:51:38,817 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-1] Executing SQL query: INSERT INTO region (name, start_date) VALUES (?, ?)
+2024-01-17 18:52:10,430 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-4] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:52:10,432 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-4] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:52:10,449 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-4] Executing SQL query: SELECT * FROM region ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:52:10,898 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-4] Finished processing getAllRegions request with 2 requestEmployees
+2024-01-17 18:52:10,900 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-4] Sent GET /regions/all response with 2 requestEmployees
+2024-01-17 18:52:55,222 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-3] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=desc, searchTerm=null
+2024-01-17 18:52:55,223 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-3] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=desc, searchTerm=null
+2024-01-17 18:52:55,224 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-3] Executing SQL query: SELECT * FROM region ORDER BY id desc LIMIT ? OFFSET ?
+2024-01-17 18:52:55,332 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-3] Finished processing getAllRegions request with 2 requestEmployees
+2024-01-17 18:52:55,333 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-3] Sent GET /regions/all response with 2 requestEmployees
+2024-01-17 18:53:16,425 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-5] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:53:16,427 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-5] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:53:16,428 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM region ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:53:16,526 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-5] Finished processing getAllRegions request with 2 requestEmployees
+2024-01-17 18:53:16,527 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-5] Sent GET /regions/all response with 2 requestEmployees
+2024-01-17 18:53:56,363 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-6] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=1
+2024-01-17 18:53:56,364 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-6] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=1
+2024-01-17 18:53:56,365 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-6] Executing SQL query: SELECT * FROM region WHERE id = ? OR name LIKE ? ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:53:56,485 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-6] Finished processing getAllRegions request with 1 requestEmployees
+2024-01-17 18:53:56,486 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-6] Sent GET /regions/all response with 1 requestEmployees
+2024-01-17 18:54:04,607 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-7] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=R
+2024-01-17 18:54:04,609 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-7] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=R
+2024-01-17 18:54:04,610 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-7] Executing SQL query: SELECT * FROM region WHERE id = ? OR name LIKE ? ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:54:04,733 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-7] Finished processing getAllRegions request with 1 requestEmployees
+2024-01-17 18:54:04,734 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-7] Sent GET /regions/all response with 1 requestEmployees
+2024-01-17 18:54:08,409 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-8] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=1
+2024-01-17 18:54:08,415 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-8] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=1
+2024-01-17 18:54:08,416 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-8] Executing SQL query: SELECT * FROM region WHERE id = ? OR name LIKE ? ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:54:08,523 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-8] Finished processing getAllRegions request with 1 requestEmployees
+2024-01-17 18:54:08,525 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-8] Sent GET /regions/all response with 1 requestEmployees
+2024-01-17 18:54:11,152 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-9] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:54:11,157 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-9] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:54:11,158 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-9] Executing SQL query: SELECT * FROM region ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:54:11,261 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-9] Finished processing getAllRegions request with 2 requestEmployees
+2024-01-17 18:54:11,263 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-9] Sent GET /regions/all response with 2 requestEmployees
+2024-01-17 18:54:48,910 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-10] Received GET /requestEmployees/1 request with requestEmployee id = 1
+2024-01-17 18:54:48,913 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-10] Processing getRegionById request with id=1
+2024-01-17 18:54:48,915 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-10] Executing SQL query: SELECT * FROM region WHERE id = ?
+2024-01-17 18:54:49,022 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-10] Finished processing getRegionById request with region id = 1
+2024-01-17 18:54:49,023 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-10] Sent GET /requestEmployees/1 response with requestEmployee id = 1
+2024-01-17 18:56:21,472 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-4] Executing SQL query: UPDATE requestEmployee SET name = ?, start_date = ?, end_date = ? WHERE id = ?
+2024-01-17 18:56:21,738 ERROR com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-4] Error executing SQL query
+2024-01-17 18:56:21,757 ERROR org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-4] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.RuntimeException: org.springframework.jdbc.BadSqlGrammarException: PreparedStatementCallback; bad SQL grammar [UPDATE requestEmployee SET name = ?, start_date = ?, end_date = ? WHERE id = ?]; nested exception is java.sql.SQLSyntaxErrorException: Unknown column 'start_date' in 'field list'] with root cause
+java.sql.SQLSyntaxErrorException: Unknown column 'start_date' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$0(JdbcTemplate.java:867)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:617)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:862)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:917)
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:927)
+	at com.example.employeedepartment.dao.RegionDao.update(RegionDao.java:107)
+	at com.example.employeedepartment.dao.RegionDao$$FastClassBySpringCGLIB$$34f5e565.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
+	at com.example.employeedepartment.dao.RegionDao$$EnhancerBySpringCGLIB$$6f88f830.update(<generated>)
+	at com.example.employeedepartment.service.imp.RegionServiceImpl.updateRegion(RegionServiceImpl.java:101)
+	at com.example.employeedepartment.controller.RegionController.updateEmployee(RegionController.java:126)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:189)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:800)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1038)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:919)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:663)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:791)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1417)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+2024-01-17 18:57:37,333 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-9] Shutting down ExecutorService 'applicationTaskExecutor'
+2024-01-17 18:57:37,336 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:57:37,339 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
+2024-01-17 18:57:37,808 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown completed.
+2024-01-17 18:57:41,726 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting EmployeeDepartmentApplication on 53s-MacBook-Air.local with PID 5886 (/Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task/target/classes started by neilaybhatt in /Users/neilaybhatt/Documents/IQM-EmployeeDepartment-Task)
+2024-01-17 18:57:41,729 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.1.1.RELEASE, Spring v5.1.3.RELEASE
+2024-01-17 18:57:41,732 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to default profiles: default
+2024-01-17 18:57:41,865 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-17 18:57:41,866 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-17 18:57:43,329 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data repositories in DEFAULT mode.
+2024-01-17 18:57:43,356 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 23ms. Found 0 repository interfaces.
+2024-01-17 18:57:43,892 INFO org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [restartedMain] Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$2a952482] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-01-17 18:57:44,488 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2024-01-17 18:57:44,514 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:57:44,526 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2024-01-17 18:57:44,527 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet Engine: Apache Tomcat/9.0.13
+2024-01-17 18:57:44,612 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/neilaybhatt/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2024-01-17 18:57:44,725 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2024-01-17 18:57:44,726 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 2860 ms
+2024-01-17 18:57:44,976 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2024-01-17 18:57:46,397 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2024-01-17 18:57:46,555 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2024-01-17 18:57:46,587 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate Core {5.3.7.Final}
+2024-01-17 18:57:46,588 INFO org.hibernate.cfg.Environment [restartedMain] HHH000206: hibernate.properties not found
+2024-01-17 18:57:46,715 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2024-01-17 18:57:46,829 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2024-01-17 18:57:47,034 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 18:57:47,822 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-01-17 18:57:48,023 INFO springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping [restartedMain] Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2024-01-17 18:57:48,194 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [restartedMain] Initializing ExecutorService 'applicationTaskExecutor'
+2024-01-17 18:57:48,218 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2024-01-17 18:57:48,515 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Context refreshed
+2024-01-17 18:57:48,529 INFO springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper [restartedMain] Found 1 custom documentation plugin(s)
+2024-01-17 18:57:48,641 INFO springfox.documentation.spring.web.scanners.ApiListingReferenceScanner [restartedMain] Scanning for api listing references
+2024-01-17 18:57:49,043 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: createEmployeeUsingPOST_1
+2024-01-17 18:57:49,047 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: deleteEmployeeUsingDELETE_1
+2024-01-17 18:57:49,059 INFO springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator [restartedMain] Generating unique operation named: updateEmployeeUsingPUT_1
+2024-01-17 18:57:49,089 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2024-01-17 18:57:49,099 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Using a shared selector for servlet write/read
+2024-01-17 18:57:49,118 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2024-01-17 18:57:49,122 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started EmployeeDepartmentApplication in 7.893 seconds (JVM running for 8.487)
+2024-01-17 18:57:53,561 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-01-17 18:57:53,563 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2024-01-17 18:57:53,607 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 44 ms
+2024-01-17 18:57:53,812 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-2] Executing SQL query: UPDATE region SET name = ?, start_date = ?, end_date = ? WHERE id = ?
+2024-01-17 18:58:00,872 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-3] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:58:00,874 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-3] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:58:00,893 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-3] Executing SQL query: SELECT * FROM region ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:58:01,009 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-3] Finished processing getAllRegions request with 2 requestEmployees
+2024-01-17 18:58:01,010 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-3] Sent GET /regions/all response with 2 requestEmployees
+2024-01-17 18:58:48,630 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-4] Executing SQL query: DELETE FROM region WHERE id = ?
+2024-01-17 18:59:05,595 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-5] Received GET /regions/all request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:59:05,596 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-5] Processing getAllRegions request with page=0, size=5, sortField=id, sortDirection=asc, searchTerm=null
+2024-01-17 18:59:05,598 INFO com.example.employeedepartment.dao.RegionDao [http-nio-8080-exec-5] Executing SQL query: SELECT * FROM region ORDER BY id asc LIMIT ? OFFSET ?
+2024-01-17 18:59:05,696 INFO com.example.employeedepartment.service.imp.RegionServiceImpl [http-nio-8080-exec-5] Finished processing getAllRegions request with 1 requestEmployees
+2024-01-17 18:59:05,698 INFO com.example.employeedepartment.controller.RegionController [http-nio-8080-exec-5] Sent GET /regions/all response with 1 requestEmployees
+2024-01-17 19:01:33,667 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Thread-9] Shutting down ExecutorService 'applicationTaskExecutor'
+2024-01-17 19:01:33,671 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-9] Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-17 19:01:33,684 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown initiated...
+2024-01-17 19:01:34,187 INFO com.zaxxer.hikari.HikariDataSource [Thread-9] HikariPool-1 - Shutdown completed.
